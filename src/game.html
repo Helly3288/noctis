@@ -1,0 +1,1880 @@
+<title>Год Лео Вельта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#0E1316;
+  --bg-2:#131A1E;
+  --panel:#172026;
+  --panel-2:#1C272E;
+  --line:#28343C;
+  --line-2:#34434D;
+  --text:#E9E3D7;
+  --text-2:#C9C3B6;
+  --muted:#8E9BA3;
+  --amber:#F0A847;
+  --amber-soft:rgba(240,168,71,.14);
+  --amber-dim:#8C6634;
+  --magenta:#E4508A;
+  --magenta-soft:rgba(228,80,138,.13);
+  --good:#86C9A0;
+  --bad:#E27A60;
+  --display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --serif:"Literata", "PT Serif", Georgia, "Times New Roman", serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--serif);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+#rain{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.5}
+.app{position:relative;z-index:1;min-height:100%;display:flex;flex-direction:column}
+
+/* Top bar */
+.top{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:5;
+  display:flex;align-items:center;gap:16px;
+  padding:12px 20px;
+  background:linear-gradient(to bottom, rgba(14,19,22,.96), rgba(14,19,22,.86));
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(6px);
+}
+.brand{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.28em;color:var(--amber);text-shadow:0 0 12px rgba(240,168,71,.35)}
+.where{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.leo-btn{display:none;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text);background:var(--panel);border:1px solid var(--line-2);padding:7px 12px;border-radius:3px;cursor:pointer}
+.leo-btn:hover{border-color:var(--amber)}
+
+.sound-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);background:transparent;border:1px solid var(--line-2);padding:6px 11px;border-radius:3px;cursor:pointer}
+.sound-btn:hover,.sound-btn:focus-visible{border-color:var(--amber);color:var(--text);outline:none}
+.sound-btn .cross{display:none}
+.sound-btn[aria-pressed="false"] .wave{display:none}
+.sound-btn[aria-pressed="false"] .cross{display:inline}
+.sound-btn[aria-pressed="false"]{color:var(--muted)}
+
+/* Scene art */
+.art{display:block;width:100%;margin:0;aspect-ratio:16/7;max-height:320px;border-radius:4px;border:1px solid var(--line);background:#0A0F12;overflow:hidden;margin-bottom:22px}
+.art canvas,.art img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Layout */
+.layout{
+  flex:1;width:100%;max-width:1120px;margin:0 auto;
+  display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:48px;
+  padding-inline:20px;padding-block:36px 64px;
+}
+.story{max-width:680px;width:100%;justify-self:center;min-width:0}
+
+/* Scene head */
+.scene-head{display:flex;flex-direction:column;gap:6px;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.scene-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.scene-head h1{font-family:var(--display);font-weight:500;font-size:clamp(22px,4vw,30px);line-height:1.2;margin:0;text-wrap:balance;color:var(--text)}
+.scene-place{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em;margin:0}
+
+.text{display:flex;flex-direction:column;gap:14px}
+.text p{margin:0;color:var(--text-2)}
+.text p.lead{color:var(--text)}
+.insight{border-left:2px solid var(--amber-dim);padding:2px 0 2px 14px;color:var(--text) !important;font-style:italic}
+.insight .tag{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:2px}
+.fade{animation:fade .45s ease both}
+@keyframes fade{from{opacity:.001;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Choices */
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:30px}
+.choice{
+  display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;
+  width:100%;text-align:left;cursor:pointer;
+  font:inherit;font-size:16px;line-height:1.5;color:var(--text);
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  padding:13px 16px;
+  transition:border-color .15s, background .15s;
+}
+.choice:hover:not([data-off]),.choice:focus-visible{border-color:var(--amber);background:var(--panel-2);outline:none}
+.choice .key{font-family:var(--mono);font-size:12px;color:var(--amber);padding-top:3px}
+.choice .body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag-chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--line-2);color:var(--muted);white-space:nowrap}
+.tag-chip.ok{color:var(--amber);border-color:var(--amber-dim)}
+.tag-chip.fail{color:var(--bad);border-color:rgba(226,122,96,.4)}
+.tag-chip.risk{color:#E8C27A;border-color:rgba(232,194,122,.45)}
+.preview .risk{color:#E8C27A}
+.tag-chip.lock{color:var(--muted)}
+.choice[data-off]{cursor:not-allowed}
+.choice.locked{opacity:.5}
+.choice.locked .key{color:var(--muted)}
+.choice.thought{background:var(--magenta-soft);border:1px dashed rgba(228,80,138,.45);color:#EBB3C9;font-style:italic;opacity:.9}
+.choice.thought .key{color:var(--magenta);font-style:normal}
+.choice.thought .tag-chip{color:var(--magenta);border-color:rgba(228,80,138,.45);font-style:normal}
+
+/* Подсказка о последствиях */
+.choice{position:relative}
+.preview{
+  display:none;position:absolute;z-index:6;left:46px;bottom:calc(100% + 8px);
+  width:max-content;max-width:min(360px,calc(100% - 46px));
+  flex-direction:column;gap:5px;padding:11px 14px;
+  background:#0B1013;border:1px solid var(--amber-dim);border-radius:4px;
+  box-shadow:0 10px 30px rgba(0,0,0,.55);
+  font-family:var(--mono);font-size:12px;line-height:1.45;font-style:normal;color:var(--text-2);text-align:left;pointer-events:none;
+}
+.preview::after{content:"";position:absolute;left:18px;top:100%;border:7px solid transparent;border-top-color:var(--amber-dim)}
+.preview .ph{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.preview .hint{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--text)}
+.preview .grp{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.preview .grp.ok{color:var(--amber)} .preview .grp.fail{color:var(--bad)}
+.preview .ln{display:flex;gap:7px}
+.preview .ln::before{content:"·";color:var(--muted)}
+.preview .up{color:var(--amber)} .preview .rel-up{color:var(--good)} .preview .down{color:var(--bad)}
+.preview .odd{color:var(--magenta)} .preview .mem{color:var(--text)} .preview .none{color:var(--muted)}
+.preview .tap{display:none;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-top:4px}
+.choice.thought .preview{border-color:rgba(228,80,138,.5)}
+.choice.thought .preview::after{border-top-color:rgba(228,80,138,.5)}
+@media (hover:hover){
+  .choice:hover .preview,.choice:focus-visible .preview{display:flex}
+}
+@media (hover:none){
+  .preview{position:static;display:none;width:auto;max-width:none;margin-top:8px;box-shadow:none;background:var(--bg-2)}
+  .preview::after{display:none}
+  .choice.armed .preview{display:flex}
+  .choice.armed{border-color:var(--amber)}
+  .preview .tap{display:block}
+}
+
+/* Result */
+.chosen{display:flex;gap:10px;margin-top:28px;padding:12px 16px;border-left:2px solid var(--amber);background:var(--amber-soft);color:var(--text);font-style:italic;border-radius:0 4px 4px 0}
+.chosen::before{content:"›";font-style:normal;color:var(--amber);font-family:var(--mono)}
+.checkline{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.checkline.pass{color:var(--amber)}
+.checkline.fail{color:var(--bad)}
+.result{margin-top:16px}
+.changes{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chg{font-family:var(--mono);font-size:12px;padding:4px 9px;border-radius:3px;border:1px solid var(--line-2);color:var(--text-2);background:var(--bg-2)}
+.chg.up{color:var(--amber);border-color:var(--amber-dim)}
+.chg.rel-up{color:var(--good);border-color:rgba(134,201,160,.4)}
+.chg.down{color:var(--bad);border-color:rgba(226,122,96,.4)}
+.chg.odd{color:var(--magenta);border-color:rgba(228,80,138,.5);background:var(--magenta-soft)}
+.chg.new{color:var(--text);border-color:var(--line-2)}
+.next{
+  margin-top:30px;font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  color:#1A1206;background:var(--amber);border:0;border-radius:3px;padding:12px 22px;cursor:pointer;
+}
+.next:hover,.next:focus-visible{background:#F6BB67;outline:2px solid var(--amber);outline-offset:3px}
+.btn-ghost{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);background:transparent;border:1px solid var(--line-2);border-radius:3px;padding:11px 18px;cursor:pointer}
+.btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--amber);color:var(--text);outline:none}
+
+/* Title screen */
+.title-screen{display:flex;flex-direction:column;gap:20px}
+.title-screen .art{margin-bottom:6px;max-height:360px}
+.title-screen .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.logo{font-family:var(--display);font-weight:700;font-size:clamp(48px,12vw,104px);line-height:.95;letter-spacing:.06em;margin:0;color:var(--amber);
+  text-shadow:0 0 18px rgba(240,168,71,.45),0 0 60px rgba(240,168,71,.18);animation:flicker 3.2s ease-out 1 both}
+@keyframes flicker{0%{opacity:.15}8%{opacity:1}10%{opacity:.3}13%{opacity:1}40%{opacity:.85}42%{opacity:1}100%{opacity:1}}
+.subtitle{font-family:var(--display);font-weight:500;font-size:clamp(18px,3vw,24px);margin:0;color:var(--text)}
+.blurb{max-width:56ch;color:var(--text-2);margin:0}
+.title-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:8px}
+.title-actions .next{margin-top:0}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+
+/* Panel */
+.panel{display:flex;flex-direction:column;gap:26px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px)}
+.p-head{display:flex;flex-direction:column;gap:2px}
+.p-name{font-family:var(--display);font-weight:500;font-size:18px;color:var(--text)}
+.p-sub{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.p-sec{display:flex;flex-direction:column;gap:10px}
+.p-sec h2{margin:0;font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-bottom:6px;border-bottom:1px solid var(--line)}
+.stat{display:grid;grid-template-columns:86px minmax(0,1fr) 20px;align-items:center;gap:10px;font-size:14px}
+.stat .n{font-family:var(--serif);color:var(--text-2)}
+.stat .v{font-family:var(--mono);font-size:13px;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.pips{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.pips i{height:7px;background:var(--line);border-radius:1px}
+.pips i.on{background:var(--amber)}
+.meter-row{display:flex;flex-direction:column;gap:6px}
+.meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px}
+.meter-top .n{color:var(--text-2)}
+.meter-top .l{font-family:var(--mono);font-size:11.5px;color:var(--text)}
+.moral{position:relative;height:8px;background:linear-gradient(to right, rgba(226,122,96,.35), var(--line) 50%, rgba(240,168,71,.35));border-radius:2px}
+.moral::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line-2)}
+.moral b{position:absolute;top:-4px;width:4px;height:16px;margin-left:-2px;background:var(--text);border-radius:1px;box-shadow:0 0 0 2px var(--bg)}
+.strange{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.strange i{height:7px;background:var(--line);border-radius:1px}
+.strange i.on{background:var(--magenta);box-shadow:0 0 6px rgba(228,80,138,.5)}
+.strange-l{color:var(--magenta) !important}
+.rel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:14px}
+.rel .n{color:var(--text-2)}
+.rel .l{font-family:var(--mono);font-size:11.5px;text-align:right}
+.rel .bar{grid-column:1/-1;height:3px;background:var(--line);position:relative;border-radius:2px;overflow:hidden}
+.rel .bar b{position:absolute;top:0;bottom:0}
+.l-good{color:var(--good)} .l-bad{color:var(--bad)} .l-mid{color:var(--muted)}
+.money{display:flex;justify-content:space-between;font-size:14px;color:var(--text-2)}
+.money b{font-family:var(--mono);font-weight:400;color:var(--text);font-variant-numeric:tabular-nums}
+.p-foot{display:flex;flex-direction:column;gap:8px}
+.close-panel{display:none}
+
+/* End */
+.end-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:26px}
+.end-box{border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.end-box h3{margin:0;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.end-line{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--text-2)}
+.end-line b{font-family:var(--mono);font-weight:400;color:var(--text)}
+.memory{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.memory li{padding-left:18px;position:relative;color:var(--text-2)}
+.memory li::before{content:"";position:absolute;left:0;top:.7em;width:7px;height:1px;background:var(--amber)}
+.memory li.strange-mem::before{background:var(--magenta)}
+h2.end-h{font-family:var(--display);font-weight:500;font-size:20px;margin:34px 0 0;color:var(--text)}
+
+.backdrop{display:none}
+@media (max-width: 900px){
+  .layout{grid-template-columns:minmax(0,1fr);padding-block:24px 56px;gap:0}
+  .leo-btn{display:inline-block}
+  .panel{position:fixed;top:0;right:0;bottom:0;width:min(340px,90vw);z-index:20;background:var(--bg-2);border-left:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top,0px) + 20px) 20px calc(env(safe-area-inset-bottom,0px) + 20px);overflow-y:auto;transform:translateX(105%);transition:transform .25s ease}
+  body.panel-open .panel{transform:none}
+  .backdrop{display:block;position:fixed;inset:0;z-index:15;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+  body.panel-open .backdrop{opacity:1;pointer-events:auto}
+  .close-panel{display:inline-block;align-self:flex-start}
+  #soundLabel{display:none}
+  .top{gap:10px;padding:10px 14px}
+  body{font-size:16.5px}
+}
+@media (prefers-reduced-motion: reduce){
+  .fade,.logo{animation:none}
+  .panel,.backdrop{transition:none}
+}
+</style>
+
+<canvas id="rain" aria-hidden="true"></canvas>
+<div class="app">
+  <header class="top">
+    <div class="brand">НОКТИС</div>
+    <div class="where" id="where"></div>
+    <button class="sound-btn" id="soundBtn" type="button" aria-pressed="true" title="Звук">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="cross" d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span id="soundLabel">Звук</span>
+    </button>
+    <button class="leo-btn" id="leoBtn" type="button" aria-controls="panel" aria-expanded="false">Лео</button>
+  </header>
+  <div class="layout">
+    <main class="story" id="story" aria-live="polite"></main>
+    <aside class="panel" id="panel" aria-label="Персонаж"></aside>
+  </div>
+</div>
+<div class="backdrop" id="backdrop"></div>
+
+<script>
+/* ============================================================
+   ДАННЫЕ ИГРЫ
+   ============================================================ */
+
+const STATS = {body:'Тело', agi:'Ловкость', tech:'Техника', mind:'Рассудок', charm:'Обаяние', will:'Воля'};
+const STAT_ORDER = ['body','agi','tech','mind','charm','will'];
+const START_STATS = {body:4, agi:4, tech:6, mind:6, charm:3, will:4};
+const REL = {dad:'Томаш, отец', mom:'Ирина, мать', nika:'Ника, сестра', dana:'Дана Ортега', street:'Квартал (репутация)', teo:'Тео Бартал'};
+
+/* mood — настроение музыки; img — путь к настоящей иллюстрации (когда появится), без неё рисуется заставка кодом */
+const SCENES = {
+  s1:{label:'Сцена 1 · 07:40', month:'Сентябрь', place:'Дом и мастерская', title:'Утро в мастерской', mood:'home'},
+  s2:{label:'Сцена 2 · 08:30', month:'Сентябрь', place:'Станция монорельса «Эстакада»', title:'Час пик', mood:'street'},
+  s3:{label:'Сцена 3 · 10:15', month:'Сентябрь', place:'Технический университет Ноктиса', title:'Лаборатория 4-Б', mood:'uni'},
+  rd_train:{label:'Дорога домой', month:'Сентябрь', place:'Монорельс, вечерний рейс', title:'Лишняя рука', mood:'street'},
+  rd_shop:{label:'Дорога домой', month:'Сентябрь', place:'Круглосуточный «Лакки 24»', title:'Автомат', mood:'street'},
+  rd_alley:{label:'Дорога домой', month:'Сентябрь', place:'Переулок за рынком', title:'Сбой', mood:'night'},
+  s4:{label:'Сцена 4 · вечер и ночь', month:'Сентябрь', place:'Дом и мастерская', title:'Ночной клиент', mood:'night'},
+  s5:{label:'Сцена 5 · две недели спустя', month:'Сентябрь', place:'Мастерская и ночной рынок', title:'Поручение', mood:'street'},
+  s6:{label:'Сцена 6 · пятница, 22:00', month:'Сентябрь', place:'Будка Тео, задняя линия рынка', title:'Зелёная лампа', mood:'night'},
+  s6n:{label:'Сцена 6 · 22:40', month:'Сентябрь', place:'Ночной рынок', title:'Напёрстки', mood:'street', art:'s5'},
+  s7:{label:'Сцена 7 · 30 сентября, 11:00', month:'Сентябрь', place:'Дом и мастерская', title:'Сверка', mood:'home', art:'s1'},
+};
+
+/* Странность копится скрытно. Шкала появится у игрока после раскрытия правды (середина года). */
+const SHOW_STRANGE = false;
+
+const ROAD_POOL = ['rd_train','rd_shop','rd_alley'];
+
+/* Как читать узел:
+   text: абзацы. Строка или {text, when:(s)=>bool, tag:'Рассудок'} — абзац виден при условии.
+   choices: t — текст выбора; hint — подсказка; eff — последствия; res — текст результата; next — куда дальше.
+   req:{stat,v} — вариант закрыт, если характеристика ниже.
+   check:{stat,v}, ok:{...}, fail:{...} — попытка; шанс зависит от характеристики.
+   thought:true — мимолётная мысль, выбрать нельзя.
+   show:(s)=>bool — вариант показывается только при условии.
+*/
+const NODES = {
+
+/* ---------- СЦЕНА 1. УТРО ---------- */
+p1:{scene:'s1', head:true, text:[
+  `Первый учебный день второго курса начинается, как всегда, с дождя. Дождь в Ноктисе не прекращается, он просто меняет громкость. Сегодня он шепчет по жестяному навесу мастерской, и в этом шёпоте тонет гул эстакады над головой.`,
+  `Мастерская Вельтов занимает первый этаж старого склада в Южных кварталах. Внизу верстаки, коробки с деталями и запах канифоли, который не выветривается никогда. Наверху кухня, три комнаты и одна ванная на четверых, из-за которой в семье случается больше войн, чем в новостях.`,
+  `Ты спускаешься к завтраку и обнаруживаешь, что твоя толстовка, единственная чистая, надета на твою сестру. Ника сидит за столом, поджав ноги, и доедает твой тост.`,
+  `— Доброе утро, — говорит она с набитым ртом. — Ты выглядишь так, будто спал в мусоропроводе.`,
+], choices:[
+  {t:`Отшутиться. Этот раунд Ника должна проиграть.`, eff:{stat:{charm:1}, rel:{nika:1}}, res:[
+    `— Ну хоть один из нас спал. А ты в этой толстовке похожа на грустный мешок с проводами. Мне нравится, оставь себе.`,
+    `Ника фыркает и чуть не давится тостом. Мать у плиты улыбается, не оборачиваясь. Толстовку ты проиграл, но утро выиграл.`,
+  ], next:'p2'},
+  {t:`Отвлечь её и тихо забрать тост обратно.`, eff:{stat:{agi:1}}, res:[
+    `— Ника, у тебя на плече паук.`,
+    `Пока она изворачивается, тост перекочёвывает к тебе. — Ты невыносим, — говорит она. — Спасибо, — отвечаешь ты и откусываешь. Толстовка остаётся у неё, но справедливость частично восстановлена.`,
+  ], next:'p2'},
+  {t:`Отвоевать тост в шуточной борьбе.`, eff:{stat:{body:1}, rel:{nika:1}}, res:[
+    `Ты сгребаешь Нику вместе со стулом. Она визжит, лягается и кусается, но весовые категории неравны. Через минуту тост у тебя, а Ника на полу, красная от смеха и злости.`,
+    `— Нечестно! — Жизнь нечестная, — говоришь ты с набитым ртом. Мать у плиты качает головой: — Два здоровых лба. Отец из мастерской кричит: — Кто победил?`,
+  ], next:'p2'},
+  {t:`Спокойно и твёрдо потребовать своё.`, eff:{stat:{will:1}, rel:{nika:-1}}, res:[
+    `— Толстовка. Моя. Сними.`,
+    `Ника закатывает глаза так сильно, что это почти слышно, но толстовку снимает и швыряет тебе в лицо. Она пахнет её шампунем. Мелкая победа, но ты стоял на своём, и это почему-то важно.`,
+  ], next:'p2'},
+]},
+
+p2:{scene:'s1', text:[
+  `Из мастерской доносится ругань на трёх языках. Отец стоит над курьерским дроном, разобранным до костей. Очки сдвинуты на лоб, на щеке масляная полоса.`,
+  `— Лео! Иди сюда. Этот гад не заводится, а клиент придёт в девять. Я проверил всё. Всё! Посмотри свежим глазом.`,
+  `И, не поднимая головы, добавляет: — Да, и ещё. Ночью, может, заглянет один старый знакомый. По работе. Если проснёшься, не пугайся и не лезь.`,
+  `До первой пары сорок минут. Если выйти сейчас, успеешь спокойно. Если задержаться, придётся бежать.`,
+], choices:[
+  {t:`Помочь отцу с дроном.`, check:{stat:'tech', v:6},
+    ok:{hint:`Починишь, но опоздаешь`, eff:{stat:{tech:1}, rel:{dad:1}, strange:1, flag:'late'}, res:[
+      `Ты садишься на корточки и прозваниваешь цепь. Отец действительно проверил всё, кроме самого скучного: разъём питания позеленел от влаги, контакт держится на честном слове. Ты зачищаешь его, подгибаешь лепесток, и винты оживают.`,
+      `— Руки у тебя золотые, — говорит отец и хлопает тебя по плечу, оставляя масляный отпечаток. — Беги, опоздаешь.`,
+      `Ты опоздаешь. Но оно того стоило: пока копался, заодно вспомнил половину отцовских журналов по армейской электронике.`,
+    ]},
+    fail:{hint:`Потратишь время впустую`, eff:{rel:{dad:-1}, flag:'late'}, res:[`Ты копаешься пятнадцать минут и ничего не находишь. Отец вздыхает и забирает отвёртку.`]},
+    next:'p3'},
+  {t:`Сказать, что опаздываешь.`, eff:{rel:{dad:-1}}, res:[
+    `— Пап, у меня пара. Вечером гляну.`,
+    `Отец машет рукой, не поднимая головы. — Иди, иди. Учёба важнее. В его голосе нет обиды, но дрон он теперь будет чинить до обеда. Чувство вины провожает тебя до самой двери.`,
+  ], next:'p3'},
+  {t:`Позвать на помощь Нику: пусть учится.`, hint:`Вдвоём быстрее, но всё равно опоздаешь`, eff:{rel:{nika:1}, flag:'late'}, res:[
+    `Ника приходит нехотя. — Я тебе не бесплатная рабочая сила. — Ты бесплатная сестра, это хуже.`,
+    `Вдвоём вы находите окислившийся разъём за десять минут. Ника довольна собой так, будто изобрела электричество. Отец смотрит на вас двоих и почему-то отворачивается к окну.`,
+  ], next:'p3'},
+]},
+
+p3:{scene:'s1', text:[
+  `Мать уже в дверях: форма медсестры районной клиники, зонт, термос. Смена у неё до полуночи. Она целует Нику в макушку, тебя в щёку, быстро, на бегу.`,
+  `Над верстаком бормочет радио: «…в рамках программы „Чистый квартал“ с октября в Южных кварталах пройдёт сплошная проверка идентификационных данных жителей. Мэрия Ноктиса напоминает: честным гражданам бояться нечего…»`,
+  `Мать останавливается. Отец выключает радио резче, чем нужно.`,
+  {tag:'Рассудок', when:s=>s.stats.mind>=6, text:`Ты замечаешь, что мать сжимает ручку зонта так, что побелели костяшки. И что отец на неё не смотрит. Слишком старательно не смотрит.`},
+], choices:[
+  {t:`Спросить прямо, в чём дело.`, hint:`Родители могут насторожиться.`, eff:{flag:'askedParents'}, res:[
+    `— Вы чего? Это же обычная проверка.`,
+    `Мать улыбается, быстро, слишком быстро. — Очереди, Лео. Ненавижу очереди. Полдня в управе, а у меня смены. Отец кивает, будто это всё объясняет. Ты почти веришь. Почти.`,
+  ], next:'r1'},
+  {t:`Пошутить, чтобы разрядить обстановку.`, hint:`Разрядит обстановку. Или нет.`, eff:{flag:'jokedDocs'}, res:[
+    `— Спокойно, мы же честные граждане. По крайней мере, по документам.`,
+    `Отец смеётся, громко, слишком громко, и роняет отвёртку. Мать не смеётся совсем. — Иди уже, остряк, — говорит она и выходит под дождь.`,
+  ], next:'r1'},
+  {t:`Промолчать и не лезть.`, eff:{rel:{mom:1}}, res:[
+    `Ты делаешь вид, что ничего не заметил. Иногда это самое доброе, что можно сделать для родителей.`,
+    `Мать выдыхает, машет рукой и исчезает под дождём. Отец включает паяльник. Жизнь продолжается.`,
+  ], next:'r1'},
+]},
+
+/* ---------- СЦЕНА 2. СТАНЦИЯ ---------- */
+r1:{scene:'s2', head:true, text:[
+  {when:s=>s.flags.late, text:`Из-за дрона ты выскакиваешь из дома на пятнадцать минут позже и влетаешь на станцию в самый разгар часа пик, на ходу застёгивая куртку.`},
+  {when:s=>!s.flags.late, text:`Ты выходишь вовремя и даже успеваешь взять соевый кофе в автомате у входа. Кофе ужасен. Это традиция.`},
+  `Станция монорельса в час пик похожа на аквариум, в который высыпали слишком много рыб. Над головами плывут голограммы: «Пандора. Открой своё будущее». «Церебра. Мы думаем о вас». Кто-то наступает тебе на ногу и извиняется на незнакомом языке.`,
+  `Крик. Женщина в строгом пальто хватается за пустое плечо. Сквозь толпу к турникетам ныряет подросток в куртке на два размера больше, прижимая к груди её сумку. У него дешёвые глазные импланты: зрачки светятся тусклым оранжевым.`,
+  `— Держите его! — Никто не держит. В Ноктисе никто никого не держит.`,
+], choices:[
+  {t:`Рвануть следом напрямик через толпу.`, check:{stat:'body', v:5},
+    ok:{hint:`Поймаешь воришку`, res:[`Ты врезаешься в толпу плечом и прорываешься. Мальчишка быстрый, но ты длиннее и злее. У самых турникетов ты хватаешь его за капюшон.`], next:'r1_caught'},
+    fail:{hint:`Упустишь его`, res:[`Ты врезаешься в толпу плечом, извиняешься, врезаешься снова. Через двадцать метров горят лёгкие, через тридцать ты понимаешь, что мальчишка давно за турникетами, а ты стоишь, согнувшись, и хрипишь, как старый компрессор. Какая-то бабушка сочувственно предлагает тебе воды.`], next:'r1_lost'}},
+  {t:`Срезать по служебной лестнице и перехватить его у выхода.`, check:{stat:'agi', v:5},
+    ok:{hint:`Перехватишь его у выхода`, res:[`Ты перемахиваешь через ограждение, скатываешься по служебной лестнице и оказываешься у выхода на секунду раньше него. Мальчишка влетает прямо тебе в руки.`], next:'r1_caught'},
+    fail:{hint:`Можно упасть и упустить его`, res:[`Ты перемахиваешь через ограждение, и нога уезжает на мокрой ступеньке. Следующие четыре ступеньки ты преодолеваешь спиной. Когда ты поднимаешься, у выхода никого.`], next:'r1_lost'}},
+  {t:`Прикинуть, куда он рванёт, и встретить его там.`, check:{stat:'mind', v:6},
+    ok:{hint:`Поймаешь его головой, а не ногами`, res:[
+      `Ты не бежишь. Ты смотришь. Турникеты забиты, у южного выхода патруль, значит, он пойдёт через грузовой лифт, как все местные мальчишки.`,
+      `Ты спокойно проходишь к лифту и встаёшь у дверей. Через десять секунд мальчишка вылетает из-за колонны прямо на тебя. Такого лица, как у него в этот момент, ты не видел ни у кого.`,
+    ], next:'r1_caught'},
+    fail:{hint:`Ошибёшься с выходом`, res:[`Ты ставишь на грузовой лифт. Мальчишка ставит на южный выход. Он выигрывает.`], next:'r1_lost'}},
+  {t:`Заорать на всю станцию: «Держите вора!»`, check:{stat:'will', v:5},
+    ok:{hint:`Толпа отреагирует`, res:[
+      `— ДЕРЖИТЕ ВОРА! — орёшь ты так, что оборачивается половина станции.`,
+      `Курьер с огромным термокоробом на спине, не поворачивая головы, выставляет ногу. Мальчишка летит через неё кубарем прямо к твоим ботинкам.`,
+      `— Работа у меня такая, — сообщает курьер неизвестно кому и уходит.`,
+    ], next:'r1_caught'},
+    fail:{hint:`Голос может сорваться`, res:[
+      `— Держите в… — голос срывается на середине, и выходит что-то среднее между криком и кашлем. Пара человек оборачивается, но на тебя, а не на вора.`,
+      `Мальчишка ныряет за турникеты и исчезает.`,
+    ], next:'r1_lost'}},
+  {t:`Не вмешиваться. Это не твоё дело.`, eff:{moral:-1, flag:'ignoredThief'}, res:[
+    `Ты отводишь глаза. Через минуту мальчишка растворяется в толпе, а женщина стоит у турникетов и кому-то звонит, и голос у неё дрожит.`,
+    `Монорельс приходит вовремя. Ты едешь и всю дорогу смотришь в окно, чтобы не смотреть на своё отражение.`,
+  ], next:'u1'},
+]},
+
+r1_caught:{scene:'s2', text:[
+  `Мальчишке лет тринадцать. Под курткой рёбра, которые можно пересчитать. Оранжевые зрачки мечутся.`,
+  `— Отпусти, а? — шепчет он. — Меня Грач убьёт, если я без сумки вернусь. Серьёзно убьёт.`,
+  `Женщина в пальто уже пробивается к вам. За ней неторопливо плывёт патрульный дрон.`,
+], choices:[
+  {t:`Отдать сумку женщине, а мальчишку отпустить, пока не подлетел дрон.`, eff:{moral:1, rel:{street:1}, flag:'releasedKid'}, res:[
+    `Ты выдёргиваешь сумку и разжимаешь пальцы. — Беги. И найди себе другого Грача.`,
+    `Мальчишка исчезает быстрее, чем ты договариваешь. Женщина забирает сумку, проверяет что-то внутри и смотрит на тебя с подозрением, будто ты был в доле. «Спасибо» она так и не говорит. Зато дед на лавке одобрительно кивает.`,
+  ], next:'u1'},
+  {t:`Сдать его патрульному дрону. Воровать нельзя.`, eff:{money:30, rel:{street:-1}, flag:'handedKid'}, res:[
+    `Дрон сканирует мальчишку, и на его запястье защёлкивается пластиковый браслет. Женщина суёт тебе тридцать кредитов: — Благодарю, молодой человек. — И уходит, даже не взглянув на воришку.`,
+    `Мальчишка смотрит на тебя, пока его уводят. Долго. Ты запомнишь этот взгляд. Он, похоже, тоже.`,
+  ], next:'u1'},
+  {t:`Спросить, кто такой Грач.`, check:{stat:'charm', v:4},
+    ok:{hint:`Мальчишка разговорится`, eff:{moral:1, rel:{street:1}, flag:'knowsGrach'}, res:[
+      `Ты отпускаешь капюшон и говоришь тихо, как с младшим. Мальчишка вдруг начинает тараторить: Грач держит всех мелких от станции до рынка, забирает половину, а кто не приносит… Он проводит пальцем по горлу.`,
+      `Потом сам отдаёт сумку и исчезает в толпе. Женщина забирает её и уходит. Имя «Грач» остаётся с тобой.`,
+    ]},
+    fail:{hint:`Мальчишка замкнётся и сбежит`, res:[
+      `Ты пытаешься говорить мягко, но выходит как у полицейского из сериала. Мальчишка замыкается, выкручивается из куртки и удирает. Без куртки, зато и без сумки.`,
+      `Ты стоишь с чужой курткой в одной руке и чужой сумкой в другой. Женщина молча забирает сумку. Куртку никто не забирает.`,
+    ]},
+    next:'u1'},
+]},
+
+r1_lost:{scene:'s2', text:[
+  `Женщина в пальто стоит у турникетов, прижимая к уху комм.`,
+  `— Там были документы, — говорит она кому-то. — Все документы.`,
+  `Ты знаешь, что такое потерять документы в Ноктисе. Все знают.`,
+], choices:[
+  {t:`Подойти и описать ей мальчишку.`, eff:{moral:1, flag:'lostThief'}, res:[
+    `Ты описываешь: оранжевые импланты, куртка не по размеру, побежал к южному выходу. Она записывает, кивает, и на секунду в её лице появляется что-то человеческое. — Спасибо. Хоть кто-то попытался.`,
+  ], next:'u1'},
+  {t:`Уйти на монорельс. Ты сделал, что мог.`, hint:`Ничего не изменится.`, eff:{flag:'lostThief'}, res:[
+    `Двери вагона закрываются. Гордость ноет сильнее, чем всё остальное. Ноктис едет дальше.`,
+  ], next:'u1'},
+]},
+
+/* ---------- СЦЕНА 3. УНИВЕРСИТЕТ ---------- */
+u1:{scene:'s3', head:true, text:[
+  {when:s=>s.flags.late, text:`Ты влетаешь в лабораторию 4-Б последним. Староста смотрит на тебя так, будто ты лично виноват в дожде.`},
+  {when:s=>!s.flags.late, text:`Ты приходишь в лабораторию 4-Б за десять минут до начала и занимаешь лучшее место: у окна, подальше от вытяжки.`},
+  {when:s=>s.flags.releasedKid || s.flags.knowsGrach, text:`Из головы не идёт мальчишка со станции. «Меня Грач убьёт». Интересно, сколько таких мальчишек бегает по Ноктису.`},
+  {when:s=>s.flags.handedKid, text:`Тридцать кредитов в кармане почему-то не радуют. Ты всё ещё слышишь, как на запястье мальчишки щёлкает браслет.`},
+  {when:s=>s.flags.ignoredThief, text:`Ты стараешься не думать о женщине у турникетов. Получается плохо.`},
+  {when:s=>s.flags.lostThief, text:`После погони до сих пор ноет всё, что может ныть. Воришка ушёл, но ты хотя бы попытался.`},
+  `Половина оборудования здесь списанные подарки корпораций: на каждом стенде логотип, на каждом логотипе улыбка. Над твоим столом табличка «Дар Церебры будущим инженерам».`,
+  `Сегодня практикум по нейроинтерфейсам. Стенд, на котором должна работать вся группа, мёртв. Преподаватель опаздывает, староста паникует, а оценка за практикум идёт в итоговую.`,
+  `— Место свободно? — Рядом садится девушка, которую ты раньше не видел. Тёмные волосы собраны в небрежный узел, на запястье старый коммуникатор, перемотанный изолентой. — Дана. Ортега. Перевелась на прошлой неделе. — Она кивает на стенд. — Он всегда такой дохлый?`,
+], choices:[
+  {t:`Полезть в стенд самому.`, check:{stat:'tech', v:6},
+    ok:{hint:`Починишь на глазах у всей группы`, eff:{rel:{dana:1}, strange:1, flag:'danaSawStand'}, res:[
+      `Ты снимаешь боковую панель. Внутри классика: пыль и отошедший шлейф. Ты вставляешь его на место, щёлкаешь фиксатором, и экран загорается. Бегут строчки загрузки, мигает логотип Церебры, белый и стерильный, как больничный свет.`,
+      `Группа аплодирует. Староста выдыхает так, будто его только что помиловали.`,
+      `Дана смотрит не на экран. Она смотрит на тебя, очень внимательно. — Быстро, — говорит она. — Ты такие уже чинил?`,
+    ]},
+    fail:{hint:`Провозишься без толку`, eff:{rel:{dana:0}}, res:[`Ты возишься с панелью, но стенд так и не оживает.`]},
+    next:'u2'},
+  {t:`Предложить Дане разобраться вместе.`, eff:{rel:{dana:2}, flag:'fixedWithDana'}, res:[
+    `— Хочешь проверить, кто из нас лучше в железе? — Это вызов? — Это приглашение. Звучит одинаково, я знаю.`,
+    `Вы ковыряетесь вдвоём минут пятнадцать. Дана знает теорию лучше тебя, ты знаешь, где у таких стендов обычно отваливаются шлейфы. Когда экран загорается, она улыбается, впервые, и сразу прячет улыбку, будто её поймали.`,
+  ], next:'u2'},
+  {t:`Подождать преподавателя. Не твоя зона ответственности.`, eff:{rel:{dana:0}, flag:'waitedStand'}, res:[
+    `Ты откидываешься на стуле. Преподаватель приходит через двадцать минут, ругается на стенд, на погоду и на корпорации, чинит за пять минут и ставит всей группе «удовлетворительно».`,
+    `Дана весь практикум что-то пишет в свой перемотанный коммуникатор.`,
+  ], next:'u2'},
+]},
+
+u2:{scene:'s3', text:[
+  `После пары Дана догоняет тебя в коридоре.`,
+  {when:s=>s.flags.danaSawStand, text:`— Слушай, ты его за минуту оживил. Преподаватель бы полчаса возился.`},
+  {when:s=>s.flags.fixedWithDana, text:`— А ты неплохо соображаешь. Для человека с дыркой на локте.`},
+  {when:s=>s.flags.waitedStand, text:`— Ты весь практикум смотрел в окно. Скучно было?`},
+  `— Где ты вообще научился возиться с железом?`,
+], choices:[
+  {t:`Честно: «В мастерской у отца. Он чинит всё, что можно починить, и немного того, что нельзя».`, eff:{rel:{dana:1}, flag:'toldDanaWorkshop'}, res:s=>[
+    `— Мастерская, — повторяет она, будто пробует слово на вкус. — Где?`,
+    `— Южные кварталы, под эстакадой. Заходи, если сломается что-нибудь дорогое. Или дешёвое. Мы не гордые.`,
+    `Она смеётся и что-то быстро помечает в коммуникаторе. Наверное, адрес. Приятно, когда тобой интересуются.`,
+    s.stats.mind>=6 ? {tag:'Рассудок', text:`Хотя странно: адрес она записала, а номер так и не спросила.`} : null,
+    `Остаток дня тянется, как все первые дни: списки, расписания, преподаватели, которые обещают, что «в этом году будет сложно». Домой ты выходишь, когда над Ноктисом уже зажигаются вывески.`,
+  ], next:{road:true, then:'w0'}},
+  {t:`Отшутиться: «Ролики в сети. Двести часов котиков и немного пайки».`, check:{stat:'charm', v:4},
+    ok:{hint:`Дана оценит шутку`, eff:{rel:{dana:1}}, res:[
+      `Дана фыркает, потом смеётся по-настоящему. — Ладно, котовед. Увидимся в четверг.`,
+      `Остаток дня тянется, как все первые дни: списки, расписания, преподаватели, которые обещают, что «в этом году будет сложно». Домой ты выходишь, когда над Ноктисом уже зажигаются вывески.`,
+    ]},
+    fail:{hint:`Шутка может не зайти`, res:[
+      `Шутка выходит так себе. Дана вежливо улыбается той улыбкой, которой улыбаются кассирам. — Ясно. Ну, увидимся.`,
+      `Ты ещё минуту стоишь в коридоре и мысленно переписываешь реплику. Во второй версии ты гораздо смешнее. Домой ты выходишь вечером, так и не придумав третью.`,
+    ]},
+    next:{road:true, then:'w0'}},
+  {t:`Уйти от ответа: «Да так, само как-то».`, hint:`Дана останется без ответа. Надолго ли?`, eff:{flag:'dodgedDana'}, res:s=>[
+    `Она не настаивает. — Само так само.`,
+    s.stats.mind>=6 ? {tag:'Рассудок', text:`Но когда ты оборачиваешься у лестницы, Дана всё ещё стоит в коридоре и смотрит тебе вслед, прижав коммуникатор к губам. Будто что-то надиктовывает.`} : `Когда ты оборачиваешься у лестницы, коридор уже пуст.`,
+    `Остаток дня тянется, как все первые дни. Домой ты выходишь, когда над Ноктисом уже зажигаются вывески.`,
+  ], next:{road:true, then:'w0'}},
+]},
+
+/* ---------- ДОРОГА ДОМОЙ (одно случайное событие) ---------- */
+rd_train:{scene:'rd_train', head:true, text:[
+  {when:s=>s.road.length<2, text:`Домой ты едешь вечерним монорельсом. Он полупустой. Ты стоишь у двери и смотришь, как огни Ноктиса стекают по стеклу вместе с дождём, и думаешь о том, что день был длинный.`},
+  {when:s=>s.road.length>=2, text:`С рынка ты едешь последним монорельсом. Вагон почти пустой, локтевой узел оттягивает карман, огни Ноктиса стекают по стеклу вместе с дождём.`},
+  `Краем глаза замечаешь, что мужчина в мятом плаще придвигается ближе. Слишком близко для полупустого вагона. Его рука скользит к твоему карману, где лежат комм и все деньги до конца недели.`,
+], choices:[
+  {t:`Перехватить руку.`, check:{stat:'agi', v:5},
+    ok:{hint:`Поймаешь его за руку`, eff:{flag:'scanner'}, res:[
+      `Ты ловишь его запястье раньше, чем он успевает что-то вытащить. Секунду вы смотрите друг на друга.`,
+      `— Станция «Рынок», — объявляет автомат. Мужчина вырывается и выскакивает в открывшиеся двери, оставив на полу дешёвый сканер-отмычку. Ты подбираешь его. Пригодится.`,
+    ]},
+    fail:{hint:`Он окажется быстрее`, eff:{money:-20}, res:[
+      `Ты дёргаешься, но он быстрее. На «Рынке» мужчина выходит, а твой карман становится легче на двадцать кредитов.`,
+      `Комм, к счастью, на месте. Видимо, модель слишком старая, чтобы её воровать.`,
+    ]},
+    next:'@after'},
+  {t:`Громко сказать: «Мужик, у тебя рука в моём кармане».`, check:{stat:'will', v:4},
+    ok:{hint:`Вор сбежит ни с чем`, res:[
+      `Ты говоришь это громко и спокойно, как о погоде. Весь вагон оборачивается. Мужчина краснеет, бормочет что-то про давку (в пустом вагоне) и выходит на следующей.`,
+      `Пожилая женщина с сумкой-тележкой показывает тебе большой палец.`,
+    ]},
+    fail:{hint:`Голос может подвести`, eff:{money:-20}, res:[`Голос срывается на середине фразы. Мужчина ухмыляется и выходит на следующей. С твоими двадцатью кредитами.`]},
+    next:'@after'},
+]},
+
+rd_shop:{scene:'rd_shop', head:true, text:[
+  {when:s=>s.road.length<2, text:`Мать на смене до полуночи, так что по дороге домой ты заходишь в круглосуточный за лапшой на всех.`},
+  {when:s=>s.road.length>=2, text:`По дороге с рынка ты заходишь в круглосуточный за водой: во рту до сих пор горит от рыночной еды.`},
+  `Автомат с напитками у входа глотает твою последнюю монету, мигает и ничего не выдаёт.`,
+  `Продавец не отрывается от сериала: — Он всегда так. Пни его. Слева. Нет, правее.`,
+], choices:[
+  {t:`Пнуть автомат, как советуют.`, check:{stat:'body', v:4},
+    ok:{hint:`Автомат сдастся`, res:[
+      `Ты бьёшь туда, куда показали. Автомат издаёт звук умирающего кита и выплёвывает банку. И ещё одну. И ещё три.`,
+      `Продавец наконец отрывается от сериала. — Ну, — говорит он, — это уже воровство. — И возвращается к сериалу.`,
+    ]},
+    fail:{hint:`Пострадает нога, не автомат`, res:[`Ты бьёшь. Автомат не реагирует. Нога реагирует.`]},
+    next:'@after'},
+  {t:`Открыть заднюю панель и разобраться.`, req:{stat:'tech', v:5}, res:[
+    `Ты снимаешь панель. Монетоприёмник забит: кто-то пытался протолкнуть в него гнутую шайбу, и всё, что бросали после, копилось за ней. Ты выковыриваешь шайбу, и в ладонь высыпается горсть монет. Раз в десять больше, чем ты бросал.`,
+    `Продавец не видит: у героя сериала как раз драма.`,
+  ], next:'rd_shop2'},
+  {t:`Махнуть рукой и уйти без банки.`, hint:`Ничего не изменится. Кроме твоего кошелька.`, res:[
+    `Монета остаётся в автомате навсегда. Где-то там, внутри, копится целое состояние из монет таких же смирившихся людей.`,
+  ], next:'@after'},
+]},
+
+rd_shop2:{scene:'rd_shop', text:[
+  `Двадцать кредитов мелочью. Для тебя это неделя обедов. Для «Лакки 24», судя по облезлым стенам, тоже.`,
+], choices:[
+  {t:`Оставить себе. Автомат первый начал.`, eff:{money:20, moral:-1, flag:'keptCoins'}, res:[
+    `Ты ссыпаешь монеты в карман. Они звенят при каждом шаге до самого дома. Громче, чем должны.`,
+  ], next:'@after'},
+  {t:`Вернуть лишнее продавцу.`, eff:{moral:1, rel:{street:1}, flag:'returnedCoins'}, res:[
+    `Продавец смотрит на горсть монет, потом на тебя, потом снова на монеты. — Ты откуда такой? — Из мастерской Вельтов. — А. Томаша сын. — Он кивает, как будто это всё объясняет, и суёт тебе банку газировки. Бесплатно.`,
+  ], next:'@after'},
+]},
+
+rd_alley:{scene:'rd_alley', head:true, text:[
+  {when:s=>s.road.length<2, text:`Чтобы успеть домой к ужину, ты срезаешь через переулок за ночным рынком.`},
+  {when:s=>s.road.length>=2, text:`С рынка ты уходишь переулком: так короче и меньше шансов встретить людей Грача.`},
+  `Под козырьком закрытой лавки сидит мужчина, его трясёт. Левая рука, дешёвый протез, дёргается сама по себе: пальцы сжимаются и разжимаются, как у сломанной куклы.`,
+  `— Сбой… — хрипит он. — Прошивка… Не трогай, укусит…`,
+], choices:[
+  {t:`Попробовать отключить протез.`, check:{stat:'tech', v:6},
+    ok:{hint:`Найдёшь сервисный порт`, eff:{moral:1, rel:{street:1}, flag:'rafaFriend'}, res:[
+      `Ты находишь сервисный порт под манжетой и замыкаешь контакты скрепкой. Протез обмякает. Мужчина долго дышит, глядя в небо.`,
+      `— Спасибо, парень. Меня Рафа зовут. Я на рынке жареную лапшу продаю. Для тебя бесплатно. Навсегда. Ну, пока не разорюсь.`,
+    ]},
+    fail:{hint:`Протез окажется слишком дешёвым`, eff:{moral:1}, res:[`Ты ищешь сервисный порт, но протез слишком дешёвый, чтобы его иметь. В итоге вы вдвоём держите руку, пока прошивка не перезагрузится сама.`]},
+    next:'@after'},
+  {t:`Вызвать скорую и дождаться её.`, eff:{money:-15, moral:1}, res:s=>[
+    `Скорая в Южные кварталы едет сорок минут и берёт плату за вызов с того, кто вызвал. Ты ждёшь рядом. Мужчина всё время извиняется.`,
+    s.road.length<2 ? `К ужину ты, конечно, опаздываешь.` : `Домой ты возвращаешься далеко за полночь.`,
+  ], next:'@after'},
+  {t:`Пройти мимо.`, eff:{moral:-1}, res:[
+    `Ты ускоряешь шаг. Позади звон: протез бьёт по жестяной витрине. Ещё раз. И ещё. Потом тишина.`,
+    `Ты не оборачиваешься.`,
+  ], next:'@after'},
+]},
+
+/* ---------- СЦЕНА 4. ВЕЧЕР И НОЧЬ ---------- */
+w0:{scene:'s4', head:true, text:[
+  `Дома пахнет подгоревшим луком и канифолью. Мать на смене, так что ужин — это то, что отец назвал «рагу», а Ника назвала «уликой».`,
+  {when:s=>s.flags.toldDanaWorkshop, text:`Ника, конечно, первым делом вытягивает из тебя новости. Узнав, что ты дал какой-то однокурснице адрес мастерской, она расплывается в улыбке: — У Лео девушка!`},
+  {when:s=>s.flags.toldDanaWorkshop, text:`Отец поднимает глаза от тарелки. Он не улыбается. — Какая однокурсница? — Дана. Новенькая, перевелась. — Перевелась откуда? — Не знаю, пап. Какая разница? Отец молчит. Потом говорит: — Никакой. Ешь.`},
+  {when:s=>s.flags.handedKid, text:`Ты рассказываешь про воришку на станции. Ника в восторге. Отец слушает молча и, когда ты доходишь до патрульного дрона, отводит глаза. — Патрулю, значит, — говорит он. — Ну. Закон есть закон.`},
+  {when:s=>s.flags.releasedKid, text:`Ты рассказываешь про воришку на станции. Отец дослушивает до места, где ты отпустил мальчишку, и неожиданно кивает: — Правильно. Патруль в Южных кварталах ещё никого не сделал лучше.`},
+  `Весь вечер отец сам не свой: дважды проверяет замок на рольставне, поглядывает на часы и в десять отправляет вас с Никой спать, чего не делал лет пять.`,
+  `— Это из-за твоего старого знакомого? — спрашиваешь ты. — Спать, — отвечает он.`,
+  {tag:'Рассудок', when:s=>s.stats.mind>=6 && (s.flags.askedParents || s.flags.jokedDocs), text:`Утреннее радио, «сплошная проверка», побелевшие костяшки матери, теперь это. Для одного дня совпадений многовато.`},
+], choices:[
+  {t:`Лечь спать, как сказали.`, hint:`Ночь пройдёт как обычно. Наверное.`, res:[
+    `Ты ложишься и долго слушаешь дождь. Потом перестаёшь слушать.`,
+  ], next:'w1'},
+  {t:`Сделать вид, что лёг, и не спать.`, hint:`Узнаешь, кто придёт ночью. Если не уснёшь.`, check:{stat:'will', v:4},
+    ok:{hint:`Дождёшься гостя`, eff:{flag:'stayedUp'}, res:[`Ты гасишь свет и лежишь с открытыми глазами. Час. Два. Дом затихает. Ты не спишь.`]},
+    fail:{hint:`Сон победит`, res:[`Ты гасишь свет, чтобы полежать с открытыми глазами. Через десять минут глаза закрываются сами.`]},
+    next:'w1'},
+  {t:`Заглянуть к Нике и спросить, что она думает.`, eff:{rel:{nika:1}, flag:'nikaMove'}, res:[
+    `Ника сидит на кровати в твоей толстовке и листает что-то в комме. — Папа так себя вёл перед тем, как мы переехали, — говорит она, не поднимая глаз. — Мне было шесть.`,
+    `— Мы переезжали? — Ну да, из Северного района. Ты что, не помнишь? Тебе же было уже десять.`,
+    `Ты не помнишь. Совсем. Ника пожимает плечами: — Может, у тебя память дырявая. Спокойной ночи, дырявая память.`,
+  ], next:'w1'},
+]},
+
+w1:{scene:'s4', text:[
+  {when:s=>s.flags.stayedUp, text:`В 02:40 раздаётся стук. Ты не спишь и поэтому слышишь всё: не в дверь, а в рольставню мастерской, три удара, пауза, ещё два.`},
+  {when:s=>!s.flags.stayedUp, text:`В 02:40 тебя будит стук. Не в дверь, а в рольставню мастерской: три удара, пауза, ещё два.`},
+  `Ты спускаешься в носках и видишь, как отец поднимает ставню ровно настолько, чтобы внутрь пролез человек. Человек пролезает с трудом. Он огромный, мокрый, и его правая рука от плеча до кончиков пальцев — военный протез, тяжёлый, с маркировкой, которую кто-то старательно сточил.`,
+  `— Томаш, — говорит гость. — Барро, — отвечает отец. Тот самый «старый знакомый». Похоже, отец ему не рад.`,
+  `Отец замечает тебя на лестнице. — Лео. Раз уж проснулся, подержи свет. И пожалуйста, — он смотрит тебе в глаза, — никаких вопросов.`,
+], choices:[
+  {t:`Держать свет и молчать.`, eff:{rel:{dad:1}}, res:[
+    `Ты держишь лампу. Отец работает быстро и молча, как хирург. Ты никогда не видел, чтобы он так работал: без ругани, без шуток, без единого лишнего движения.`,
+    `Барро смотрит на тебя поверх отцовской головы. Долго. — Сын? — спрашивает он. — Сын, — отвечает отец, не поднимая глаз.`,
+  ], next:'w2'},
+  {t:`Всё-таки заговорить с гостем.`, check:{stat:'charm', v:4},
+    ok:{hint:`Барро что-нибудь расскажет`, eff:{rel:{dad:-1}, flag:'heardRumor'}, res:[
+      `— Хорошая рука, — говоришь ты. — Армейская? Барро хмыкает. — Была. Как и я.`,
+      `Потом, помолчав: — Томаш, в квартале люди ходят. Спрашивают про беглых из больших лабораторий. Платят хорошо.`,
+      `Отвёртка в руке отца замирает на полсекунды. — Нас это не касается, — говорит он. — Держи свет ровнее, Лео.`,
+    ]},
+    fail:{hint:`Барро промолчит, отец рассердится`, eff:{rel:{dad:-1}}, res:[
+      `— Хорошая рука, — говоришь ты. — Армейская? Барро смотрит на тебя как на муху, которая заговорила. Не отвечает.`,
+      `Отец цедит сквозь зубы: — Свет, Лео.`,
+    ]},
+    next:'w2'},
+  {t:`Вернуться наверх, раз просили не лезть.`, eff:{rel:{dad:-1}, flag:'wentUp'}, res:[
+    `— Ладно, пап. Отец кивает, не глядя.`,
+    `Уже на верхней ступеньке ты слышишь, как гость тихо говорит: — Большой вырос. Ответа отца не слышно. Уснуть не получается.`,
+  ], next:'w2'},
+]},
+
+w2:{scene:'s4', mood:'tense', text:[
+  {when:s=>!s.flags.wentUp, text:`Отец подключает к протезу диагностический кабель, и рука оживает. Не так, как должна. Пальцы растопыриваются, сервоприводы воют, и огромная механическая кисть смыкается у отца на горле.`},
+  {when:s=>s.flags.wentUp, text:`Снизу доносится вой сервоприводов и хрип. Ты скатываешься по лестнице. Огромная механическая кисть уже сжимает отцу горло.`},
+  `Барро рычит, пытаясь оттащить собственную руку второй, живой. — Не могу… Она не слушается… Томаш!`,
+  `Лицо отца наливается тёмной кровью.`,
+], choices:[
+  {t:`Повиснуть на протезе всем весом.`, check:{stat:'body', v:5},
+    ok:{hint:`Освободишь отца своими силами`, res:[
+      `Ты виснешь на руке, и она поддаётся на сантиметр, на два, достаточно, чтобы отец вдохнул и дотянулся до разъёма. Кабель выдернут. Рука падает, как мёртвая.`,
+      `Отец сидит на полу и кашляет. Барро смотрит на тебя с уважением: — Крепкий малый.`,
+    ]},
+    fail:{hint:`Рука отшвырнёт тебя`, eff:{strange:1, flag:'froze'}, res:[
+      `Ты виснешь на руке всем весом. Рука этого даже не замечает. Она дёргает плечом, и ты летишь через полмастерской в стеллаж с деталями. Бок взрывается болью.`,
+      `Сквозь звон в ушах ты видишь, как отец синеет. Ты кричишь, сам не понимая что.`,
+      `И в ту же секунду в мастерской гаснет свет.`,
+      `Сервоприводы взвизгивают и замолкают. Темнота. Тишина. Хрип отца, потом кашель. Когда над дверью начинает мигать аварийная лампа, рука Барро висит мёртвым грузом, а отец сидит на полу и держится за горло.`,
+    ]},
+    next:'w3'},
+  {t:`Выдернуть силовой кабель из стены.`, check:{stat:'agi', v:5},
+    ok:{hint:`Обесточишь протез`, res:[
+      `Кабель тянется через всю мастерскую. Ты перелетаешь через верстак и срываешь его со стены вместе с розеткой. Протез дёргается и замирает.`,
+      `Отец падает на колени и кашляет, кашляет, кашляет.`,
+    ]},
+    fail:{hint:`Не дотянешься до кабеля`, eff:{strange:1, flag:'froze'}, res:[
+      `Ты прыгаешь через верстак, цепляешься ногой и падаешь. Кабель в метре от тебя. Отец хрипит. Ты кричишь.`,
+      `И в ту же секунду в мастерской гаснет свет.`,
+      `Сервоприводы взвизгивают и замолкают. Когда над дверью начинает мигать аварийная лампа, рука Барро висит мёртвым грузом. Кабель по-прежнему в розетке.`,
+    ]},
+    next:'w3'},
+  {t:`Найти аварийный сброс протеза.`, hint:`У военных протезов он где-то есть. Вопрос, где.`, check:{stat:'tech', v:7},
+    ok:{hint:`Отключишь руку отвёрткой`, eff:{rel:{dad:1}, flag:'foundReset'}, res:[
+      `Ты вспоминаешь схему из отцовских журналов: аварийный сброс у армейских моделей прячут под локтевой пластиной. Ты вгоняешь отвёртку в щель, нажимаешь, и рука обмякает.`,
+      `Отец падает на колени и кашляет. Барро смотрит на тебя: — Откуда знаешь? — Журналы, — хрипит отец вместо тебя. — Он читает мои журналы.`,
+    ]},
+    fail:{hint:`Не найдёшь сброс вовремя`, eff:{strange:1, flag:'froze'}, res:[
+      `Ты шаришь отвёрткой по пластинам: локоть, запястье, плечо. Сброса нигде нет. Отец хрипит всё тише. Ты кричишь.`,
+      `И в ту же секунду в мастерской гаснет свет.`,
+      `Сервоприводы взвизгивают и замолкают. Когда над дверью начинает мигать аварийная лампа, рука Барро висит мёртвым грузом.`,
+    ]},
+    next:'w3'},
+  {t:`Закричать: «ХВАТИТ!»`, hint:`Ни силы, ни плана. Только крик.`, eff:{strange:1, flag:['froze','shouted']}, res:[
+    `— ХВАТИТ!`,
+    `Это даже не слово. Это что-то, что вырывается из тебя вместе с воздухом, откуда-то из-под рёбер.`,
+    `И в ту же секунду в мастерской гаснет свет.`,
+    `Сервоприводы взвизгивают и замолкают. Темнота. Тишина. Хрип отца, потом кашель. Когда над дверью начинает мигать аварийная лампа, рука Барро висит мёртвым грузом, а отец сидит на полу, держится за горло и смотрит на тебя.`,
+  ], next:'w3'},
+  {t:`Отключить его. Не руку — его самого. Всю нервную систему разом, как рубильник. Мысль приходит откуда-то снизу, холодная и чужая, и от неё начинает тошнить.`, thought:true},
+]},
+
+w3:{scene:'s4', text:[
+  {when:s=>s.flags.froze, text:`Свет дают через минуту: в щитке выбило автомат. Отец долго смотрит на щиток. Потом на тебя. — Скачок напряжения, — говорит он Барро. — Старая проводка.`},
+  {when:s=>s.flags.froze, text:`Барро кивает. Но у ставни оборачивается: — Береги сына, Томаш, — говорит он тихо. — Очень береги.`},
+  {when:s=>!s.flags.froze, text:`Барро уходит через полчаса. — Спасибо, малый, — бросает он тебе на прощание. — Реакция что надо.`},
+  `На верстаке остаётся пачка кредитов, вдвое больше, чем стоит ремонт.`,
+  `Потом вы с отцом сидите на кухне. Три часа ночи. Отец греет руки о чашку, на шее у него наливаются синяки в форме пальцев. Чай остывает. Никто не идёт спать.`,
+], choices:[
+  {t:`Спросить, что это было.`, hint:`Отец может сказать правду. А может и нет.`, eff:{flag:'askedWhat'}, res:s=>[
+    `— Пап. Что это было?`,
+    `Отец долго смотрит в чашку. — Старая рука, — говорит он наконец. — Паршивая прошивка. Скачок напряжения. Бывает. — Он поднимает глаза. — Бывает, Лео. Ты мне веришь?`,
+    s.flags.froze ? `Ты вспоминаешь темноту и тишину, в которой замерла рука. Скачок напряжения. Конечно. Ты киваешь.` : `Ты смотришь на синяки у него на шее. Ты киваешь. Ты не веришь.`,
+  ], next:'m0'},
+  {t:`Просто сесть рядом.`, eff:{rel:{dad:1}, flag:'dadLove'}, res:[
+    `Ты садишься рядом и ничего не говоришь. Отец тоже. Через какое-то время он кладёт тяжёлую тёплую ладонь тебе на затылок, как делал, когда ты был маленьким, и держит так, пока не остынет чай.`,
+    `— Я тебя люблю, — говорит он. — Что бы ни было. Помни.`,
+    `Это звучит как прощание, и тебе становится страшно.`,
+  ], next:'m0'},
+  {t:`Пошутить.`, hint:`Смех иногда помогает. А иногда выдаёт больше слов.`, eff:{flag:'notMine'}, res:[
+    `— Ну, — говоришь ты, — зато клиент заплатил вдвое. Может, будем всем руки ломать?`,
+    `Отец смеётся. Сначала через силу, потом по-настоящему, до слёз, до кашля, держась за горло. — Ты невозможный, — говорит он. — Весь в мать.`,
+    `Ты почему-то запоминаешь, что он не сказал «весь в меня».`,
+  ], next:'m0'},
+]},
+
+/* ---------- СЦЕНА 5. ПОРУЧЕНИЕ И НОЧНОЙ РЫНОК ---------- */
+m0:{scene:'s5', head:true, text:[
+  `Две недели проходят так, как проходят все недели после чего-то странного: ты всё ждёшь продолжения, а его нет. Пары, практикумы, мастерская, дождь.`,
+  {when:s=>s.flags.froze, text:`Про ту ночь отец не говорит. Только однажды ты застаёшь его у электрощитка: он стоит и смотрит на выбитый тогда автомат, будто тот может ему что-то объяснить.`},
+  {when:s=>!s.flags.froze, text:`Синяки на шее отца желтеют, потом бледнеют. Про ту ночь он не говорит, а ты не спрашиваешь.`},
+  {when:s=>(s.rel.dana||0)>=2, text:`С Даной вы теперь сидите вместе на всех практикумах. Она смешно ругается на преподавателей и никогда ничего не рассказывает о себе. Ты замечаешь это не сразу.`},
+  {when:s=>('dana' in s.rel) && s.rel.dana<2, text:`Дана здоровается с тобой в коридорах, но держится на расстоянии. Иногда тебе кажется, что она смотрит тебе в спину.`},
+  `В пятницу вечером отец кладёт на верстак свёрток, перетянутый изолентой.`,
+  `— Ночной рынок, задняя линия, будка с зелёной лампой. Спросишь Тео. Отдашь это, заберёшь то, что он даст. Барро нужен новый локтевой узел, а такие есть только у Тео.`,
+  `— А сам почему не сходишь? — Меня там слишком хорошо помнят, — говорит отец и не объясняет, хорошо это или плохо.`,
+  `Тео ты помнишь смутно: сухой смешливый старик с мутным искусственным глазом. Он приходил, когда тебе было лет двенадцать, и подарил тебе первый паяльник.`,
+  `— Я с тобой! — объявляет Ника с лестницы. — Нет, — хором отвечаете вы с отцом.`,
+], choices:[
+  {t:`Взять Нику с собой: под присмотром ей ничего не будет.`, eff:{rel:{nika:1, dad:-1}, flag:'nikaCame'}, res:[
+    `— Под мою ответственность, пап.`,
+    `Отец долго смотрит на тебя, потом на Нику. — Под твою. Если с ней что-то случится, я тебя… — Знаю, знаю. Ника уже натягивает кроссовки, твою толстовку и самую невинную улыбку в Южных кварталах.`,
+  ], next:'m1'},
+  {t:`Отказать: ночной рынок не место для пятнадцатилетней.`, hint:`Отец будет доволен. Ника — нет.`, eff:{rel:{nika:-1, dad:1}, flag:'nikaSneaked'}, res:[
+    `— Нет, Ника. Правда нет.`,
+    `Ника смотрит на тебя как на предателя всего человечества и хлопает дверью своей комнаты так, что с полки падает отвёртка.`,
+    `Уже на улице ты не замечаешь, что свет в её окне погас подозрительно быстро.`,
+  ], next:'m1'},
+  {t:`Договориться: она остаётся, а ты приносишь ей лапшу с рынка.`, check:{stat:'charm', v:4},
+    ok:{hint:`Ника согласится`, eff:{flag:'nikaDeal'}, res:[
+      `— Двойная порция. С острым соусом. И ты неделю моешь ванную. — Три дня. — Пять. — Договорились.`,
+      `Ника пожимает тебе руку с видом торговца оружием. Отец одобрительно хмыкает.`,
+    ]},
+    fail:{hint:`Ника не купится`, eff:{rel:{nika:-1}, flag:'nikaSneaked'}, res:[
+      `— Лапшу? Серьёзно? Мне не десять лет. — Ника уходит к себе с видом оскорблённой королевы.`,
+      `Уже на улице ты не замечаешь, что свет в её окне погас подозрительно быстро.`,
+    ]},
+    next:'m1'},
+]},
+
+m1:{scene:'s5', text:[
+  `Ночной рынок начинается там, где кончаются фонари, и светится ярче любой рекламы в деловом центре. Навесы из пластика, гирлянды ламп, пар из кастрюль, запах жареного теста и палёной изоляции. Здесь продают всё: лапшу, импланты, чужие воспоминания на кристаллах, «почти новые» глаза.`,
+  {when:s=>s.flags.nikaCame, text:`Ника держится за твой рукав первые десять метров. Потом отпускает и начинает вертеть головой так, что ты боишься за её шею.`},
+  {when:s=>s.flags.rafaFriend, text:`— Эй, мастер! — из облака пара машет Рафа, тот самый, с протезом. Рука у него теперь ходит как новая. Он суёт тебе картонку с лапшой и, узнав, куда ты идёшь, понижает голос: — К Тео? Тео честный. Пока тебе от него ничего не нужно. Запомни.`},
+  {when:s=>s.flags.nikaDeal, text:`Лапшу для Ники ты возьмёшь на обратном пути. Главное не забыть, иначе мыть тебе ванную до Нового года.`},
+  `Задняя линия — узкий проход между рядами, где лампы висят реже, а продавцы смотрят внимательнее.`,
+], choices:[
+  {t:`Держать Нику рядом и идти прямо к Тео.`, show:s=>s.flags.nikaCame, res:[
+    `— Не отставай. — Я не отстаю, я исследую. — Исследуй ближе.`,
+  ], next:s=>s.flags.handedKid ? 'm2h' : (s.flags.releasedKid || s.flags.knowsGrach) ? 'm2f' : 't1'},
+  {t:`Разрешить Нике пять минут у лотка со светящимися татуировками.`, show:s=>s.flags.nikaCame, hint:`Нике понравится. Маме — вряд ли.`, eff:{rel:{nika:1}, flag:'nikaTattoo'}, res:[
+    `Через пять минут у Ники на запястье светится крошечная голубая рыбка. Через шесть она показывает её тебе в двадцатый раз.`,
+    `Матери вы это объясните как-нибудь потом. Желательно никогда.`,
+  ], next:s=>s.flags.handedKid ? 'm2h' : (s.flags.releasedKid || s.flags.knowsGrach) ? 'm2f' : 't1'},
+  {t:`Идти к задней линии.`, show:s=>!s.flags.nikaCame, res:[
+    `Ты сворачиваешь с шумного ряда, и гул рынка сразу становится тише, будто кто-то убавил громкость.`,
+  ], next:s=>s.flags.handedKid ? 'm2h' : (s.flags.releasedKid || s.flags.knowsGrach) ? 'm2f' : 't1'},
+]},
+
+m2h:{scene:'s5', text:[
+  `Проход перегораживают трое. Двое постарше, лет по шестнадцать, а между ними тот самый мальчишка со станции. Оранжевые зрачки узнают тебя раньше, чем ты его. Браслета на запястье уже нет: в Южных кварталах патрульные браслеты снимают за полчаса и за десятку.`,
+  `— Это он, — говорит мальчишка. — Который сдал.`,
+  `Старший сплёвывает тебе под ноги. — Грач передаёт привет. И счёт.`,
+  {when:s=>s.flags.nikaCame, text:`Ника за твоей спиной перестаёт дышать.`},
+], choices:[
+  {t:`Стоять и смотреть им в глаза.`, check:{stat:'will', v:4},
+    ok:{hint:`Они отступят первыми`, eff:{flag:'grachDebt'}, res:[
+      `Ты не двигаешься. Секунда, две, пять. Старший первым отводит взгляд: драк на задней линии Тео не любит, а Тео здесь принято слушаться.`,
+      `— Ещё увидимся, — бросает он. Они уходят. Мальчишка оглядывается дважды.`,
+    ]},
+    fail:{hint:`Дрогнешь`, eff:{flag:'grachDebt'}, res:[`Колени выдают тебя раньше, чем лицо. Старший толкает тебя в грудь, и ты садишься в лоток с кабелями. Они уходят, смеясь.`]},
+    next:'t1'},
+  {t:`Ударить первым, пока их не стало больше.`, check:{stat:'body', v:5},
+    ok:{hint:`Уложишь старшего`, eff:{flag:'grachEnemy'}, res:[
+      `Ты бьёшь старшего под дых, коротко и зло. Он садится на мокрый асфальт и пытается вспомнить, как дышать. Второй отступает на шаг.`,
+      `— Ты покойник, — шипит старший, поднимаясь. Они растворяются между лотков. Кулак у тебя болит так, будто это ты получил.`,
+    ]},
+    fail:{hint:`Старший дерётся чаще, чем ты`, eff:{flag:'grachEnemy'}, res:[
+      `Ты бьёшь первым. Старший, судя по всему, дерётся чаще, чем ты чинишь дроны. Через десять секунд у тебя разбита губа, а куртка порвана по шву.`,
+      `Они уходят, не торопясь. Им некуда торопиться: теперь ты никуда от них не денешься.`,
+    ]},
+    next:'t1'},
+  {t:`Сказать мальчишке, что тогда был неправ.`, check:{stat:'charm', v:4},
+    ok:{hint:`Мальчишка поверит`, eff:{moral:1, flag:'grachSoftened'}, res:[
+      `— Слушай. Я тогда поступил как идиот. — Ты смотришь мальчишке в глаза. — Не как вор, а как идиот. Прости.`,
+      `Мальчишка моргает. Старшие переглядываются. — Пошли, — говорит мальчишка. — Он того… нормальный.`,
+    ]},
+    fail:{hint:`Прозвучит как издёвка`, eff:{flag:'grachDebt'}, res:[`Слова застревают в горле, и выходит почти издевательски. Старший смеётся: — Извинения свои оставь себе. Грач сам с тобой поговорит.`]},
+    next:'t1'},
+  {t:`Развернуться и уйти через ряды.`, check:{stat:'agi', v:5},
+    ok:{hint:`Оторвёшься`, eff:{flag:'grachDebt'}, res:[`Ты ныряешь под навес, между двумя лотками, через кухню какой-то забегаловки (повар кричит тебе вслед на трёх языках) и через минуту стоишь у зелёной лампы. Хвоста нет.`]},
+    fail:{hint:`Запутаешься в гирлянде`, eff:{flag:'grachDebt'}, res:[`Ты ныряешь под навес и застреваешь в гирлянде. Они догоняют, но бить не бьют, только отвешивают подзатыльник. — Бегать научись, — советует старший.`]},
+    next:'t1'},
+]},
+
+m2f:{scene:'s5', text:[
+  `У лотка с жареными жуками тебя дёргают за рукав. Мальчишка со станции, тот самый, с оранжевыми глазами. Живой, целый и, кажется, даже сытый.`,
+  {when:s=>s.flags.releasedKid, text:`— Ты тогда меня отпустил, — говорит он. — Меня Кит зовут.`},
+  {when:s=>!s.flags.releasedKid, text:`— Ты тогда со мной по-человечески говорил, — говорит он. — Меня Кит зовут.`},
+  `— Ты к Тео? Я короткий путь знаю. — Он понижает голос. — Только это… Грач про тебя спрашивал. Кто такой, где живёт. Я не сказал. Но он всё равно узнает, он всё узнаёт.`,
+], choices:[
+  {t:`Попросить Кита предупредить, если Грач спросит снова.`, check:{stat:'charm', v:4},
+    ok:{hint:`Кит согласится`, eff:{rel:{street:1}, flag:['kitFriend','kitInformant']}, res:[`— Ладно, — говорит Кит так серьёзно, будто подписывает контракт. — Ты мне, я тебе. Где тебя найти? — В мастерской Вельтов. — А, у Томаша. Знаю.`]},
+    fail:{hint:`Кит пожмёт плечами`, eff:{flag:'kitFriend'}, res:[`Кит пожимает плечами: — Посмотрим. Я Грачу тоже не враг.`]},
+    next:'t1'},
+  {t:`Спросить, зачем ты Грачу.`, eff:{flag:['kitFriend','grachAware']}, res:[
+    `— Зачем я ему? — Грач всех запоминает, кто ему мешал, — говорит Кит просто. — Ты мешал. Не бойся, он не сразу. Он сначала смотрит.`,
+  ], next:'t1'},
+  {t:`Сказать Киту, чтобы держался от Грача подальше.`, eff:{moral:1, flag:'kitFriend'}, res:[
+    `— Держись от него подальше, слышишь? — Куда я денусь? — Кит смотрит на тебя почти снисходительно. — Грач — это как дождь. Его не обойдёшь.`,
+    `Короткий путь, кстати, действительно короткий.`,
+  ], next:'t1'},
+]},
+
+/* ---------- СЦЕНА 6. ТЕО ---------- */
+t1:{scene:'s6', head:true, text:[
+  `Будка Тео прилеплена к стене старого кинотеатра, как ласточкино гнездо. Внутри тесно от полок: платы, мотки провода, банки с винтами, три монитора, из которых работает полтора. Над всем этим горит зелёная лампа.`,
+  `Тео почти такой, каким ты его помнишь: сухой, лысый, с мутным искусственным глазом, который не мигает. Морщин стало больше, а голос остался прежним, будто он постоянно чему-то радуется.`,
+  `— Лео Вельт, — говорит он, не оборачиваясь. — В последний раз ты доставал мне до пояса и разобрал мой комм. Собрать, правда, не смог. — Мне было двенадцать. — Твой отец в двенадцать собрал. Ладно, давай свёрток.`,
+  {when:s=>s.flags.nikaCame, text:`Тео замечает Нику и надолго задерживает на ней живой глаз. — Сестра? Вылитая Ирина. Одно лицо. — Про тебя он ничего такого не говорит.`},
+  {when:s=>s.flags.froze, text:`Он взвешивает свёрток на ладони и будто между делом добавляет: — Барро заходил. Рассказывал, как ты у Томаша в мастерской кричишь. Громко, говорит. Аж пробки вылетают.`},
+  {when:s=>!s.flags.froze, text:`Он взвешивает свёрток на ладони. — Барро заходил. Говорит, реакция у тебя что надо. Для инженера редкость.`},
+], choices:[
+  {t:`Отшутиться: «Проводка у нас старая. От чиха вылетает».`, show:s=>s.flags.froze, check:{stat:'charm', v:4},
+    ok:{hint:`Тео посмеётся`, res:[`Тео смеётся, сухо и коротко, как кашляет. — Проводка, да. У Томаша всегда проводка.`]},
+    fail:{hint:`Шутка выйдет натянутой`, eff:{flag:'teoSuspects'}, res:[`Шутка выходит натянутой, и ты сам это слышишь. Тео кивает: — Ну-ну. — И больше ничего не говорит.`]},
+    next:'t2'},
+  {t:`Спокойно пожать плечами: совпадение.`, show:s=>s.flags.froze, check:{stat:'will', v:4},
+    ok:{hint:`Лицо не дрогнет`, res:[`Тео смотрит на тебя живым глазом долго, дольше, чем нужно. Ты смотришь в ответ. Потом он кивает. — Совпадение. Бывает.`]},
+    fail:{hint:`Лицо выдаст`, eff:{flag:'teoSuspects'}, res:[`Ты пожимаешь плечами, но уши предательски краснеют. Тео ничего не говорит. Он просто запоминает.`]},
+    next:'t2'},
+  {t:`Спросить, что ещё рассказывал Барро.`, show:s=>s.flags.froze, check:{stat:'mind', v:6},
+    ok:{hint:`Заметишь, как Тео себя ведёт`, eff:{flag:'teoWatching'}, res:[
+      `— А что ещё он рассказывал? — Да ничего. Барро вообще мало говорит.`,
+      `Тео улыбается. Но ты замечаешь, что его пальцы перестали крутить отвёртку, пока ты говорил. Он ждал твоей реакции. Это была проверка.`,
+    ]},
+    fail:{hint:`Ничего не узнаешь`, res:[`— Да ничего. Барро вообще мало говорит.`]},
+    next:'t2'},
+  {t:`Скромно пожать плечами: «Отец сам справился бы».`, show:s=>!s.flags.froze, res:[
+    `— Томаш сам бы справился, — соглашается Тео. — Лет двадцать назад. Сейчас ему нужен кто-то с руками побыстрее.`,
+  ], next:'t2'},
+  {t:`Пошутить: «Это вы ещё не видели, как я от Ники убегаю».`, show:s=>!s.flags.froze, eff:{rel:{teo:1}}, res:[
+    `Тео хохочет так, что звенят банки с винтами. — Нравишься ты мне, Лео Вельт. Томаш никогда не шутил. Томаш только ругался.`,
+  ], next:'t2'},
+]},
+
+t2:{scene:'s6', text:[
+  `Тео убирает свёрток под прилавок и ставит перед тобой металлическую коробку размером с ладонь. На крышке древний кодовый замок, наполовину механический.`,
+  `— Локтевой узел внутри, — говорит он. — Откроешь — забирай. Не откроешь — пусть приходит отец. А отца я видеть не хочу: мы с ним поругаемся, и опять из-за ерунды.`,
+], choices:[
+  {t:`Вскрыть замок по всем правилам.`, check:{stat:'tech', v:7},
+    ok:{hint:`Откроешь, как настоящий мастер`, eff:{rel:{teo:1}, flag:'teoTech'}, res:[
+      `Ты находишь сервисный контакт под наклейкой производителя, замыкаешь его пинцетом и сбрасываешь код. Щелчок.`,
+      `Тео присвистывает. — Руки Томаша. Точно его руки.`,
+    ]},
+    fail:{hint:`Провозишься долго`, eff:{rel:{teo:1}, strange:1, flag:'teoSawLuck'}, res:[
+      `Ты возишься десять минут. Замок оказывается умнее тебя. Тео наблюдает с интересом, как за котом, который пытается открыть холодильник.`,
+      `Ты уже готов сдаться и в сердцах дёргаешь крышку, и замок щёлкает. Видимо, всё-таки что-то нажал.`,
+      `— Повезло? — спрашивает Тео. — Повезло. — Ну-ну, — говорит он и почему-то больше не улыбается.`,
+    ]},
+    next:'t3'},
+  {t:`Сначала внимательно осмотреть коробку.`, check:{stat:'mind', v:6},
+    ok:{hint:`Заметишь то, что пропускают другие`, eff:{rel:{teo:2}, flag:'teoMind'}, res:[
+      `Ты не трогаешь замок. Вертишь коробку, смотришь на петли, на шов, на винты… Задняя стенка держится на двух винтах. Замок — декорация.`,
+      `Ты откручиваешь винты ногтем и достаёшь узел. Тео долго молчит. — Большинство сразу лезут в замок, — говорит он наконец. — А ты сначала посмотрел. Это редкость. Очень полезная редкость.`,
+    ]},
+    fail:{hint:`Ничего не заметишь`, res:[`Ты вертишь коробку и ничего особенного не видишь. Тео открывает её сам, не объясняя как.`]},
+    next:'t3'},
+  {t:`Попробовать сканер-отмычку, который обронил вор в монорельсе.`, show:s=>s.flags.scanner, eff:{rel:{teo:1}, flag:'teoScanner'}, res:[
+    `Ты достаёшь сканер. Тео вдруг начинает хохотать так, что дрожат мониторы.`,
+    `— Откуда у тебя это? Это мой сканер! Я его месяц назад продал одному идиоту. — Идиот пытался обчистить мой карман. — Значит, сканер вернулся домой. — Тео утирает слезу живым глазом. — Оставь себе. Считай, подарок.`,
+    `Замок, кстати, открывается с первого раза.`,
+  ], next:'t3'},
+  {t:`Отказаться: пусть отец сам приходит.`, eff:{rel:{teo:-1}}, res:[
+    `— Не буду я ломать ваши коробки. Хотите отца — зовите отца.`,
+    `Тео пожимает плечами и открывает коробку сам, одним движением. — Гордый. Тоже в Томаша.`,
+  ], next:'t3'},
+]},
+
+t3:{scene:'s6', text:[
+  `Тео кладёт локтевой узел тебе в руки, но пальцев не разжимает.`,
+  `— У меня к тебе предложение, Лео. Мне нужны руки. Молодые, умные, неболтливые. По вечерам, два-три раза в неделю. Ремонт, настройка, иногда что-нибудь поинтереснее. Плачу нормально.`,
+  `— Отцу, — добавляет он, — я бы на твоём месте пока не говорил. У нас с Томашем разные взгляды на то, что можно чинить.`,
+  {tag:'Рассудок', when:s=>s.stats.mind>=7 || s.flags.teoWatching, text:`Он говорит легко, но смотрит на тебя так, как отец смотрит на редкую деталь, которую нашёл на свалке. Прикидывает, во что её можно вставить.`},
+], choices:[
+  {t:`Согласиться.`, hint:`Деньги, опыт и секрет от отца.`, eff:{rel:{teo:1}, flag:'teoJob'}, res:[
+    `— По рукам.`,
+    `Тео наконец отпускает узел. — Вторник, семь вечера. Опоздаешь — вычту из зарплаты, которой пока нет.`,
+  ], next:s=>s.flags.nikaSneaked ? 'n1' : {road:true, then:'c1'}},
+  {t:`Отказаться.`, eff:{flag:'teoRefused'}, res:[
+    `— Нет, спасибо. У меня учёба и мастерская.`,
+    `Тео не обижается. Кажется, он вообще не умеет обижаться. — Предложение не сгорает, — говорит он. — Я подожду. Я умею ждать.`,
+  ], next:s=>s.flags.nikaSneaked ? 'n1' : {road:true, then:'c1'}},
+  {t:`Спросить, что значит «поинтереснее».`, check:{stat:'charm', v:4},
+    ok:{hint:`Тео ответит честно`, eff:{flag:['teoMaybe','teoHonest']}, res:[
+      `— Поинтереснее — это когда замок стоит дороже того, что за ним. — Тео подмигивает мёртвым глазом, и это жутко. — Людей не граблю, не бойся. Корпорации — не люди.`,
+      `Ты говоришь, что подумаешь. Тео кивает, будто другого и не ждал.`,
+    ]},
+    fail:{hint:`Тео отшутится`, eff:{flag:'teoMaybe'}, res:[`— Приходи — узнаешь, — улыбается Тео. Ты говоришь, что подумаешь.`]},
+    next:s=>s.flags.nikaSneaked ? 'n1' : {road:true, then:'c1'}},
+]},
+
+/* ---------- НИКА У НАПЁРСТКОВ (если она сбежала на рынок) ---------- */
+n1:{scene:'s6n', head:true, text:[
+  `На обратном пути у лотка с напёрстками собралась толпа. Ты бы прошёл мимо, если бы не знакомый голос: — Это нечестно! Я видела!`,
+  `Ника. В твоей толстовке, с мокрыми волосами и тем лицом, которое у неё бывает, когда она вот-вот заплачет, но решила не плакать. Напёрсточник, парень с золотыми пальцами-имплантами, держит в руке её комм.`,
+  `— Проиграла — плати, — говорит он лениво. — Комм в залог. Придёшь с деньгами — отдам.`,
+  {when:s=>s.flags.handedKid || s.flags.grachDebt || s.flags.grachEnemy, text:`За его спиной маячат знакомые куртки. Люди Грача.`},
+  `Ника замечает тебя. Облегчение на её лице длится полсекунды, потом его сменяет злость: теперь ей влетит.`,
+], choices:[
+  {t:`Показать всей толпе, где на самом деле шарик.`, check:{stat:'mind', v:6},
+    ok:{hint:`Вернёшь комм, но разозлишь людей Грача`, eff:{moral:1, rel:{nika:1}, flag:'grachAngry'}, res:[
+      `Ты следишь за руками. Три перекладывания, и ты видишь, как шарик уходит под золотой ноготь. — Под пальцем, — говоришь ты громко. — Покажи пальцы.`,
+      `Толпа гудит. Кто-то смеётся. Напёрсточник смотрит на тебя с такой ненавистью, что становится холодно, и швыряет Нике комм. — Забирай. И брата своего забирай.`,
+    ]},
+    fail:{hint:`Не уследишь`, eff:{rel:{nika:-1}, flag:'lostComm'}, res:[`Ты следишь за руками, но руки быстрее глаз. Напёрсточник ухмыляется. Комм остаётся у него.`]},
+    next:'n2'},
+  {t:`Забрать комм силой.`, check:{stat:'body', v:5},
+    ok:{hint:`Отберёшь комм`, eff:{rel:{nika:1}, flag:'grachEnemy'}, res:[`Ты перехватываешь золотое запястье и выкручиваешь, пока пальцы не разжимаются. Комм падает Нике в ладони. Вы уходите быстро, не оборачиваясь, и тебе очень хочется обернуться.`]},
+    fail:{hint:`Получишь, и комм останется у него`, eff:{flag:['grachEnemy','lostComm']}, res:[`Ты хватаешь его за руку, и золотые пальцы оказываются очень твёрдыми. Особенно когда попадают тебе в скулу. Комм остаётся у напёрсточника.`]},
+    next:'n2'},
+  {t:`Предложить сделку: «Левый мизинец у тебя западает. Починю — отдашь комм».`, check:{stat:'tech', v:6},
+    ok:{hint:`Договоришься по-хорошему`, eff:{rel:{nika:1}, flag:'hustlerFixed'}, res:[
+      `Напёрсточник подозрительно шевелит пальцами. Мизинец действительно дёргается с опозданием. — Ну, давай. Только без фокусов.`,
+      `Две минуты, пинцет, капля смазки, и мизинец щёлкает как новый. Напёрсточник смотрит на него почти с нежностью и бросает Нике комм. — Приходи ещё, мастер. Мне такие руки нужны.`,
+    ]},
+    fail:{hint:`Не справишься`, eff:{flag:'lostComm'}, res:[`Ты ковыряешься в мизинце, но он западает ещё сильнее. — Всё, свободен, — говорит напёрсточник. Комм остаётся у него.`]},
+    next:'n2'},
+  {t:`Сказать: «Ещё партия. Я играю за неё».`, hint:`Рискнёшь курткой. Зато без драки и без новых счетов с Грачом.`, eff:{strange:1, rel:{nika:1}, flag:'hustlerGlitch'}, res:[
+    `Ты ставишь на кон свою куртку. Напёрсточник ухмыляется и начинает перекладывать, быстро, красиво.`,
+    `И вдруг золотой мизинец дёргается не вовремя. Шарик выкатывается из-под ногтя прямо на стол, у всех на глазах. Толпа взрывается хохотом. — Импланты китайские! — кричит кто-то.`,
+    `Напёрсточник, красный как неон, швыряет Нике комм. Ты даже не успел ничего выбрать.`,
+  ], next:'n2'},
+  {t:`Просто увести Нику. Комм — не жизнь.`, eff:{rel:{nika:-1}, flag:'lostComm'}, res:[
+    `Ты берёшь Нику за руку и молча ведёшь прочь. Она не сопротивляется, и это хуже, чем если бы сопротивлялась.`,
+  ], next:'n2'},
+]},
+
+n2:{scene:'s6n', text:[
+  `Домой вы идёте пешком и молча. Дождь смывает с рынка неон, и Южные кварталы снова становятся серыми.`,
+  {when:s=>s.flags.lostComm, text:`— Там были все мои фотки, — говорит Ника в никуда. — За три года.`},
+  `У самой двери она останавливается. — Папе не говори. Пожалуйста.`,
+], choices:[
+  {t:`Не говорить. Это останется между вами.`, hint:`Ника будет благодарна. Отец ничего не узнает.`, eff:{rel:{nika:2}, flag:'nikaSecret'}, res:[
+    `— Не скажу. — Правда? — Правда. Но ты мне должна. Много.`,
+    `Ника вдруг обнимает тебя, быстро и крепко, и сразу отталкивает, будто обожглась. — Ты всё равно дурак, — говорит она и уходит к себе.`,
+  ], next:'c1'},
+  {t:`Сказать отцу: так будет честнее.`, eff:{rel:{dad:1, nika:-2}, flag:'toldDadNika'}, res:[
+    `— Прости, Ник. Он должен знать.`,
+    `Ника смотрит на тебя так, что лучше бы ударила. Разговор отца с ней ты слышишь через две стены. Слов не разобрать, но голос у отца такой, каким он говорил с Барро.`,
+  ], next:'c1'},
+  {t:`Не говорить, но взять с неё слово, что это в последний раз.`, eff:{rel:{nika:1}, flag:'nikaPromise'}, res:[
+    `— Не скажу. Но это последний раз. Дай слово. — Даю, — говорит Ника слишком быстро.`,
+    `Вы оба знаете, чего стоит такое слово в пятнадцать лет. Но оно всё-таки дано.`,
+  ], next:'c1'},
+]},
+
+/* ---------- СЦЕНА 7. СВЕРКА ---------- */
+c1:{scene:'s7', head:true, text:[
+  `Последний день сентября выпадает на субботу. Отец с утра уехал отвозить Барро локтевой узел, Ника спит, мать после ночной смены пьёт кофе, держа кружку двумя руками.`,
+  {when:s=>s.flags.teoJob, text:`Ты думаешь о вторнике и о том, как будешь объяснять отцу, где пропадаешь по вечерам. Пока ничего не придумал.`},
+  `В одиннадцать в рольставню стучат. Вежливо, по-казённому: ровно три раза.`,
+  `На пороге мужчина в форменной куртке управы Южных кварталов, с планшетом, сканером и лицом человека, которому до обеда осталось обойти ещё сорок адресов.`,
+  `— Инспектор Хольт, отдел учёта населения, — говорит он, не поднимая глаз. — Предварительная сверка перед октябрьской проверкой. Форма семь-Б, уточнение сведений о лицах, фактически проживающих по адресу. Документы, пожалуйста. Чипы, не бумагу.`,
+  `Мать протягивает свой чип. Хольт подносит сканер. Сканер думает, пищит и выдаёт красное. Хольт вздыхает так, будто сканер лично его предал.`,
+  `— Не читается. Формат старый. — Он что-то отмечает в планшете. — Придётся направить вас на очную сверку в управу. С полным пакетом документов на всех проживающих. Очередь, — он сверяется с планшетом, — примерно три недели.`,
+  {tag:'Рассудок', when:s=>s.stats.mind>=6, text:`Мать улыбается инспектору. Но её рука на дверном косяке вцепилась в дерево так, что побелели ногти. Как тогда, с зонтом.`},
+], choices:[
+  {t:`Предложить починить инспектору сканер.`, check:{stat:'tech', v:6},
+    ok:{hint:`Сканер заработает. Инспектор запомнит тебя.`, eff:{rel:{mom:1}, flag:'clerkKnowsLeo'}, res:[
+      `— Можно? — Ты берёшь сканер. Антенна считывателя отошла от платы, классика. Ты подгибаешь контакт ногтем.`,
+      `Хольт подносит чип матери ещё раз. Зелёный. «Данные подтверждены».`,
+      `Хольт смотрит на сканер, потом на тебя, с выражением человека, увидевшего чудо в пятницу вечером. — Молодой человек. Вам бы к нам в техотдел. Как вас записать? — Лео Вельт. — Он записывает. Мать за его спиной закрывает глаза.`,
+    ]},
+    fail:{hint:`Не справишься`, eff:{flag:'inPersonCheck'}, res:[`Ты крутишь сканер, но он так и не читает чип. Хольт забирает его обратно. — Очная сверка, третье октября, девять утра. Всех касается.`]},
+    next:'c2'},
+  {t:`Заболтать инспектора, пока мама ищет «бумажную копию».`, check:{stat:'charm', v:4},
+    ok:{hint:`Инспектор махнёт рукой`, eff:{rel:{mom:1}, flag:'visualCheck'}, res:[
+      `Ты спрашиваешь Хольта, сколько адресов ему осталось. Он отвечает. Ты сочувствуешь. Через пять минут ты знаешь всё про его начальницу, его язву и систему «Учёт-4», которая «ложится, если на неё посмотреть».`,
+      `Хольт ставит в планшете галочку «сверено визуально». — Хорошие вы люди, — говорит он на прощание. — Редкость.`,
+    ]},
+    fail:{hint:`Инспектору не до разговоров`, eff:{flag:'inPersonCheck'}, res:[`Ты пытаешься завязать разговор, но Хольт отвечает односложно и смотрит на часы. — Молодой человек, у меня сорок адресов. Очная сверка, третье октября, девять утра. Всех касается.`]},
+    next:'c2'},
+  {t:`Подсказать инспектору ручной ввод номера.`, check:{stat:'mind', v:6},
+    ok:{hint:`Сработает, но в журнале останется отметка`, eff:{flag:'manualEntry'}, res:[
+      `— Если сканер не видит старый формат, номер можно вбить вручную, — говоришь ты. — В «Учёт-4» есть такой режим, у нас в университете та же версия.`,
+      `Хольт смотрит с подозрением, потом с облегчением и вбивает номер. Зелёный. — Ручной ввод, — бормочет он. — Отметится в журнале. Ну и ладно, у меня полрайона на ручном вводе.`,
+    ]},
+    fail:{hint:`Не вспомнишь, как это делается`, eff:{flag:'inPersonCheck'}, res:[`Ты пытаешься вспомнить меню «Учёт-4», но путаешься. Хольт теряет терпение. — Очная сверка, третье октября. Всех касается.`]},
+    next:'c2'},
+  {t:`Постучать по сканеру, как отец по телевизору.`, hint:`Отец всегда так делает. Быстро, без имён и без отметок в журнале.`, eff:{strange:1, rel:{mom:1}, flag:'luckyScanner'}, res:[
+    `— Можно? — Ты берёшь у Хольта сканер и стучишь им о ладонь, два раза, по-отцовски. Хольт открывает рот, чтобы возмутиться, но сканер уже пищит. Зелёный. «Данные подтверждены».`,
+    `— Вот что значит молодые руки, — говорит Хольт без всякого интереса, ставит галочку и уходит к следующему адресу. Имени твоего он не спрашивает.`,
+    `Мать смотрит на сканер в руках уходящего инспектора. Потом на тебя. Долго.`,
+  ], next:'c2'},
+  {t:`Не вмешиваться. Это мамино дело.`, hint:`Мама справится сама. Как-нибудь.`, eff:{flag:'inPersonCheck'}, res:[
+    `Ты молчишь. Мать улыбается Хольту и говорит, что чип, наверное, повредился в стирке. Хольт кивает с видом человека, который слышал это сто раз.`,
+    `— Очная сверка, третье октября, девять утра. Всех касается.`,
+  ], next:'c2'},
+]},
+
+c2:{scene:'s7', text:[
+  `Когда за инспектором опускается ставня, мать садится на ступеньку лестницы и долго молчит.`,
+  {when:s=>s.flags.inPersonCheck, text:`— Третье октября, — говорит она наконец. — Надо сказать отцу.`},
+  {when:s=>s.flags.clerkKnowsLeo, text:`— Зачем ты назвал ему своё имя? — спрашивает она тихо. — Он же спросил. — Да, — кивает она. — Он спросил.`},
+  {when:s=>s.flags.luckyScanner, text:`— Как ты это сделал? — спрашивает она. — Постучал. Как папа. — Как папа, — повторяет она и почему-то отводит глаза.`},
+  {when:s=>s.flags.manualEntry || s.flags.visualCheck, text:`— Спасибо, — говорит она. — Ты даже не представляешь, как ты нас… как ты меня выручил.`},
+], choices:[
+  {t:`Спросить, почему она так испугалась.`, hint:`Мама может сказать правду. А может и нет.`, eff:{flag:'askedMom'}, res:[
+    `— Мам. Почему ты так испугалась? Это же просто сверка.`,
+    `Мать смотрит на тебя, и на секунду тебе кажется, что сейчас она скажет что-то важное. Потом она улыбается. — Потому что очная сверка — это день без зарплаты и три часа в очереди с людьми, которые кашляют. — Она встаёт и целует тебя в макушку. — Не бери в голову.`,
+  ], next:'END'},
+  {t:`Сесть рядом и обнять её.`, eff:{rel:{mom:1}}, res:[
+    `Ты садишься рядом. Мать кладёт голову тебе на плечо, как будто это ты взрослый, а она ребёнок.`,
+    `Так вы сидите, пока наверху не просыпается Ника и не начинает на весь дом требовать завтрак.`,
+  ], next:'END'},
+  {t:`Пошутить про инспектора.`, eff:{flag:'jokedClerk'}, res:[
+    `— Зато у меня теперь есть предложение работы. Техотдел управы. Буду чинить сканеры и ненавидеть людей.`,
+    `Мать смеётся, по-настоящему, впервые за утро. — Только не это. Одного человека, который всё чинит, этой семье хватает.`,
+  ], next:'END'},
+]},
+
+};
+
+/* Что запомнил мир (для итогового экрана). Третий элемент true — момент, связанный с тайной. */
+const MEMORY = [
+  ['askedParents','Ты спросил родителей про проверку документов. Они ответили слишком быстро.'],
+  ['jokedDocs','Ты пошутил про «честных по документам». Мама не засмеялась.'],
+  ['releasedKid','Ты отпустил мальчишку со станции.'],
+  ['handedKid','Ты сдал мальчишку патрулю. Он запомнил твоё лицо.'],
+  ['knowsGrach','Ты знаешь имя: Грач. Он держит мелких воришек от станции до рынка.'],
+  ['ignoredThief','Ты не вмешался, когда у женщины украли сумку.'],
+  ['danaSawStand','Дана видела, как быстро ты оживил стенд Церебры.'],
+  ['fixedWithDana','Вы с Даной починили стенд вместе.'],
+  ['toldDanaWorkshop','Дана знает, где мастерская твоего отца. Отцу это не понравилось.'],
+  ['dodgedDana','Ты ушёл от вопросов Даны.'],
+  ['scanner','У тебя есть дешёвый сканер-отмычка.'],
+  ['keptCoins','Ты оставил себе монеты из сломанного автомата.'],
+  ['returnedCoins','Ты вернул лишние монеты продавцу. Он знает твоего отца.'],
+  ['rafaFriend','Рафа с рынка должен тебе лапшу. Навсегда.'],
+  ['nikaMove','Ника помнит переезд из Северного района. Ты не помнишь его совсем.', true],
+  ['heardRumor','В квартале кто-то платит за сведения о беглецах из больших лабораторий.'],
+  ['foundReset','Ты нашёл аварийный сброс протеза. Отец тобой гордится.'],
+  ['froze','Протез замер в ту же секунду, когда погас свет. «Скачок напряжения», — сказал отец.', true],
+  ['dadLove','Отец сказал, что любит тебя. Это прозвучало как прощание.'],
+  ['notMine','«Весь в мать», — сказал отец. Не «весь в меня».'],
+  ['teoSawLuck','Замок Тео открылся, когда ты уже сдался. Тео перестал улыбаться.', true],
+  ['hustlerGlitch','Золотой мизинец напёрсточника дал сбой в самый нужный момент.', true],
+  ['luckyScanner','Сканер инспектора заработал, когда ты по нему постучал. Мать это видела.', true],
+  ['nikaTattoo','У Ники на запястье светится голубая рыбка. Мама ещё не знает.'],
+  ['grachDebt','Люди Грача считают, что ты им должен.'],
+  ['grachEnemy','Ты подрался с людьми Грача. Такое здесь не забывают.'],
+  ['grachSoftened','Ты извинился перед мальчишкой со станции. Кажется, он поверил.'],
+  ['kitFriend','Мальчишку со станции зовут Кит. Он говорит, что Грач о тебе спрашивал.'],
+  ['teoTech','Тео сказал, что у тебя руки Томаша.'],
+  ['teoMind','Тео заметил, что ты сначала думаешь, а потом делаешь.'],
+  ['teoScanner','Сканер-отмычка из монорельса оказался сканером Тео.'],
+  ['teoSuspects','Тео не поверил в старую проводку.', true],
+  ['teoWatching','Тео ждал твоей реакции, когда говорил про Барро.', true],
+  ['teoJob','Ты работаешь у Тео по вечерам. Отец об этом не знает.'],
+  ['teoRefused','Ты отказал Тео. Он сказал, что умеет ждать.'],
+  ['teoMaybe','Ты обещал Тео подумать над его предложением.'],
+  ['grachAngry','Ты разоблачил напёрсточника Грача на глазах у всего рынка.'],
+  ['hustlerFixed','Напёрсточник с золотыми пальцами зовёт тебя в мастера.'],
+  ['lostComm','Ника осталась без комма и без фотографий за три года.'],
+  ['nikaSecret','Ты хранишь секрет Ники.'],
+  ['toldDadNika','Ты рассказал отцу про Нику на рынке. Она этого не забудет.'],
+  ['clerkKnowsLeo','Инспектор Хольт записал твоё имя.', true],
+  ['manualEntry','Данные матери внесены вручную. В журнале управы остался след.', true],
+  ['visualCheck','Инспектор Хольт поставил «сверено визуально» и ушёл обедать.'],
+  ['inPersonCheck','Третьего октября вся семья идёт на очную сверку в управу.', true],
+];
+
+/* ============================================================
+   ДВИЖОК
+   ============================================================ */
+
+const SAVE_KEY = 'noctis-leo-v1';
+let S = null;
+
+function fresh(){
+  return {v:2, stats:{...START_STATS}, moral:2, strange:0, money:40,
+    rel:{dad:2, mom:2, nika:1}, flags:{}, road:[], after:null,
+    node:'intro', view:'node', result:null};
+}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function load(){
+  try{ const r = localStorage.getItem(SAVE_KEY); if(r){ const o = JSON.parse(r); if(o && o.v===2 && (NODES[o.node] || o.node==='END' || o.node==='intro')) return o; } }catch(e){}
+  return null;
+}
+function clearSave(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
+
+const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+const val = x => typeof x==='function' ? x(S) : x;
+const esc = s => String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function resolveText(arr){
+  const out = [];
+  (val(arr)||[]).forEach(p=>{
+    if(p==null) return;
+    if(typeof p==='string') out.push({text:p});
+    else if(typeof p==='object'){ if(p.when && !p.when(S)) return; out.push({text:p.text, tag:p.tag}); }
+  });
+  return out;
+}
+
+function apply(eff){
+  const ch = [];
+  if(!eff) return ch;
+  if(eff.stat) for(const k in eff.stat){
+    const o = S.stats[k]; S.stats[k] = clamp(o+eff.stat[k],1,10); const d = S.stats[k]-o;
+    if(d) ch.push({t:(d>0?'+':'')+d+' '+STATS[k], c:d>0?'up':'down'});
+  }
+  if(eff.moral){
+    const o = S.moral; S.moral = clamp(o+eff.moral,-5,5); const d = S.moral-o;
+    if(d) ch.push({t:'Мораль '+(d>0?'↑':'↓'), c:d>0?'up':'down'});
+  }
+  if(eff.strange){
+    const o = S.strange; S.strange = clamp(o+eff.strange,0,10); const d = S.strange-o;
+    if(d && SHOW_STRANGE) ch.push({t:'Странность +'+d, c:'odd'});
+  }
+  if(eff.money){
+    const o = S.money; S.money = Math.max(0,o+eff.money); const d = S.money-o;
+    if(d) ch.push({t:(d>0?'+':'−')+credits(Math.abs(d)), c:d>0?'up':'down'});
+  }
+  if(eff.rel) for(const k in eff.rel){
+    const isNew = !(k in S.rel);
+    const o = isNew ? 0 : S.rel[k];
+    S.rel[k] = clamp(o+eff.rel[k],-5,5); const d = S.rel[k]-o;
+    const name = REL[k].split(/[,(]/)[0].trim();
+    if(isNew) ch.push({t:FACTIONS[k] || 'Новое знакомство: '+name, c:'new'});
+    if(d) ch.push({t:name+': отношения '+(d>0?'↑':'↓'), c:d>0?'rel-up':'down'});
+  }
+  if(eff.flag) [].concat(eff.flag).forEach(f=>S.flags[f]=true);
+  return ch;
+}
+
+/* Шанс проверки: хватает — всегда успех; не хватает 1 — 35%; 2 — 10%; больше — провал */
+function checkChance(have, need){ const d = need-have; return d<=0 ? 1 : d===1 ? .35 : d===2 ? .1 : 0; }
+const pct = c => Math.round(c*100)+'%';
+function credits(n){ const a=Math.abs(n)%100, b=a%10; const w = (a>10&&a<20)?'кредитов':b===1?'кредит':(b>=2&&b<=4)?'кредита':'кредитов'; return n+' '+w; }
+const FACTIONS = {street:'Появилась репутация в квартале'};
+
+function choiceInfo(c){
+  if(c.show && !c.show(S)) return null;
+  if(c.thought) return {kind:'thought'};
+  if(c.req){ const have=S.stats[c.req.stat]; return {kind: have>=c.req.v ? 'req-ok' : 'locked', stat:c.req.stat, need:c.req.v, have}; }
+  if(c.check){ const have=S.stats[c.check.stat]; const chance=checkChance(have,c.check.v); return {kind:'check', stat:c.check.stat, need:c.check.v, have, chance}; }
+  return {kind:'plain'};
+}
+
+function choose(i){
+  const n = NODES[S.node]; const c = n.choices[i]; const info = choiceInfo(c);
+  if(!info || info.kind==='thought' || info.kind==='locked') return;
+  let branch = c, check = null;
+  if(c.check){ const pass = info.chance>=1 || Math.random()<info.chance; branch = pass ? c.ok : c.fail; check = {stat:c.check.stat, need:c.check.v, have:info.have, chance:info.chance, pass}; }
+  const changes = apply(branch.eff);
+  const text = resolveText(branch.res);
+  const next = branch.next !== undefined ? branch.next : c.next;
+  S.view = 'result';
+  S.result = {chosen: val(c.t), text, changes, check, next};
+  save(); render();
+}
+
+function go(next){
+  if(typeof next==='function') next = next(S);
+  if(next && typeof next==='object' && next.road){
+    S.after = next.then;
+    const pool = ROAD_POOL.filter(id=>!S.road.includes(id));
+    if(!pool.length){ next = next.then; }
+    else { next = pool[Math.floor(Math.random()*pool.length)]; S.road.push(next); }
+  }
+  if(next==='@after'){ next = S.after || 'END'; S.after = null; }
+  S.node = next; S.view = 'node'; S.result = null;
+  save(); render(true);
+}
+
+/* ============================================================
+   ОТРИСОВКА
+   ============================================================ */
+const $story = document.getElementById('story');
+const $panel = document.getElementById('panel');
+const $where = document.getElementById('where');
+
+function paras(list){
+  return list.map(p=> p.tag
+    ? `<p class="insight"><span class="tag">${esc(p.tag)}</span>${esc(p.text)}</p>`
+    : `<p>${esc(p.text)}</p>`).join('');
+}
+
+function effLines(eff){
+  const out = [];
+  if(!eff) return out;
+  if(eff.stat) for(const k in eff.stat){ const d=eff.stat[k]; out.push([(d>0?'+':'')+d+' '+STATS[k], d>0?'up':'down']); }
+  if(eff.moral) out.push(['Мораль '+(eff.moral>0?'↑':'↓'), eff.moral>0?'up':'down']);
+  if(eff.rel) for(const k in eff.rel){
+    const name = REL[k].split(/[,(]/)[0].trim(), d = eff.rel[k];
+    if(!(k in S.rel)) out.push([FACTIONS[k] || 'Новое знакомство: '+name, 'mem']);
+    if(d) out.push([name+': отношения '+(d>0?'↑':'↓'), d>0?'rel-up':'down']);
+  }
+  if(eff.money) out.push([(eff.money>0?'+':'−')+credits(Math.abs(eff.money)), eff.money>0?'up':'down']);
+  if(eff.strange && SHOW_STRANGE) out.push(['Может случиться что-то странное', 'odd']);
+  if(eff.flag && [].concat(eff.flag).some(f=>MEMORY.some(m=>m[0]===f))) out.push(['Мир это запомнит', 'mem']);
+  return out;
+}
+function previewHtml(c, info){
+  const ln = arr => arr.map(([t,cl])=>`<span class="ln ${cl}">${esc(t)}</span>`).join('');
+  let h = '';
+  if(info.kind==='thought'){
+    h = `<span class="hint">Мимолётная мысль. Ты пока не понимаешь, откуда она и что с ней делать.</span>`;
+    return `<span class="preview" role="tooltip">${h}</span>`;
+  }
+  if(c.hint) h += `<span class="hint">${esc(val(c.hint))}</span>`;
+  if(info.kind==='locked'){
+    h += `<span class="ln down">Нужно: ${STATS[info.stat]} ${info.need}, у тебя ${info.have}</span>`;
+    const e = effLines(c.eff); if(e.length) h += `<span class="grp">Дало бы</span>`+ln(e);
+  } else if(info.kind==='check'){
+    h += `<span class="ph">Проверка · ${STATS[info.stat]}: у тебя ${info.have}, нужно ${info.need}</span>`;
+    h += info.chance>=1 ? `<span class="ln up">Успех гарантирован</span>` : info.chance>0 ? `<span class="ln risk">Шанс успеха ${pct(info.chance)}: может повезти</span>` : `<span class="ln down">Провал неизбежен: не хватает ${info.need-info.have}</span>`;
+    const ok = effLines(c.ok && c.ok.eff), fail = effLines(c.fail && c.fail.eff);
+    const side = (b, e) => (b && b.hint ? `<span class="ln mem">${esc(b.hint)}</span>` : '') + (e.length ? ln(e) : (b && b.hint ? '' : `<span class="ln none">без изменений в статах</span>`));
+    h += `<span class="grp ok">Если получится</span>` + side(c.ok, ok);
+    h += `<span class="grp fail">Если не получится</span>` + side(c.fail, fail);
+  } else {
+    const e = effLines(c.eff);
+    h += e.length ? ln(e) : (c.hint ? '' : `<span class="ln none">Без заметных последствий</span>`);
+  }
+  if(!h) return '';
+  const tap = info.kind==='locked' ? 'Этот вариант сейчас недоступен' : 'Нажми ещё раз, чтобы выбрать';
+  return `<span class="preview" role="tooltip">${h}<span class="tap">${tap}</span></span>`;
+}
+
+function tagsFor(info){
+  if(info.kind==='req-ok') return `<span class="tag-chip ok">${STATS[info.stat]} ${info.need} ✓</span>`;
+  if(info.kind==='locked') return `<span class="tag-chip lock">Нужно: ${STATS[info.stat]} ${info.need} · у тебя ${info.have}</span>`;
+  if(info.kind==='check'){ const cl = info.chance>=1?'ok':info.chance>0?'risk':'fail'; return `<span class="tag-chip ${cl}">Проверка · ${STATS[info.stat]} ${info.have}/${info.need} · ${info.chance>=1?'успех':info.chance>0?'шанс '+pct(info.chance):'провал'}</span>`; }
+  if(info.kind==='thought') return `<span class="tag-chip">мысль · пока недоступно</span>`;
+  return '';
+}
+
+function renderNode(){
+  const n = NODES[S.node]; const sc = SCENES[n.scene];
+  $where.textContent = sc.month+' · '+sc.place;
+  let h = '';
+  const fd = S.view==='result' ? '' : ' fade';
+  if(n.head) h += Art.html(sc.art || n.scene, sc.title) + `<div class="scene-head${fd}"><span class="scene-num">${esc(sc.label)}</span><h1>${esc(sc.title)}</h1><p class="scene-place">${esc(sc.month)} · ${esc(sc.place)}</p></div>`;
+  h += `<div class="text${fd}">${paras(resolveText(n.text))}</div>`;
+
+  if(S.view==='result' && S.result){
+    const r = S.result;
+    h += `<div class="chosen fade">${esc(r.chosen)}</div>`;
+    if(r.check){ const ch = r.check.chance!=null && r.check.chance<1 && r.check.chance>0 ? ` · шанс ${pct(r.check.chance)}` : ''; const luck = r.check.pass && r.check.chance<1 ? ' · повезло' : ''; h += `<div class="checkline ${r.check.pass?'pass':'fail'}">Проверка · ${STATS[r.check.stat]} ${r.check.have} против ${r.check.need}${ch} · ${r.check.pass?'успех':'провал'}${luck}</div>`; }
+    h += `<div class="text result fade">${paras(r.text)}</div>`;
+    if(r.changes.length) h += `<div class="changes fade">${r.changes.map(c=>`<span class="chg ${c.c}">${esc(c.t)}</span>`).join('')}</div>`;
+    h += `<button class="next" id="nextBtn" type="button">Далее →</button>`;
+  } else {
+    let k = 0;
+    h += `<div class="choices">`;
+    n.choices.forEach((c,i)=>{
+      const info = choiceInfo(c); if(!info) return;
+      const disabled = info.kind==='thought' || info.kind==='locked';
+      const cls = info.kind==='thought' ? 'thought' : (info.kind==='locked' ? 'locked' : '');
+      const key = disabled ? '·' : String(++k);
+      h += `<button class="choice ${cls}" id="ch-${S.node}-${i}" type="button" data-i="${i}" ${disabled?'aria-disabled="true" data-off="1"':`data-key="${key}"`}>
+        <span class="key">${key}</span>
+        <span class="body"><span>${esc(val(c.t))}</span>${info.kind!=='plain'?`<span class="tags">${tagsFor(info)}</span>`:''}${previewHtml(c, info)}</span>
+      </button>`;
+    });
+    h += `</div>`;
+  }
+  $story.innerHTML = h;
+  const touch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  $story.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{
+    const off = b.dataset.off==='1';
+    if(touch && !b.classList.contains('armed')){
+      $story.querySelectorAll('.choice.armed').forEach(o=>o.classList.remove('armed'));
+      b.classList.add('armed'); return;
+    }
+    if(off) return;
+    choose(+b.dataset.i);
+  }));
+  const nb = document.getElementById('nextBtn');
+  if(nb){ nb.addEventListener('click',()=>go(S.result.next)); }
+}
+
+function renderIntro(){
+  $where.textContent = 'Прототип · сентябрь';
+  const has = load();
+  const canContinue = has && has.node!=='intro';
+  $story.innerHTML = `<div class="title-screen">
+    ${Art.html('city','Ночной Ноктис')}
+    <span class="eyebrow">Нарративная РПГ · прототип</span>
+    <h1 class="logo">НОКТИС</h1>
+    <p class="subtitle">Год Лео Вельта</p>
+    <p class="blurb">Лео девятнадцать. Он учится на инженера, по вечерам чинит чужие импланты в мастерской отца и уверен, что его жизнь самая обычная в Ноктисе. До этого сентября так и было.</p>
+    <div class="title-actions">
+      ${canContinue ? `<button class="next" id="contBtn" type="button">Продолжить</button><button class="btn-ghost" id="newBtn" type="button">Начать заново</button>`
+                    : `<button class="next" id="newBtn" type="button">Начать</button>`}
+    </div>
+    <span class="hint">Выборы: клавиши 1–4 или клик. Далее: Enter.</span>
+  </div>`;
+  document.getElementById('newBtn').addEventListener('click',()=>{ S = fresh(); go('p1'); });
+  const cb = document.getElementById('contBtn');
+  if(cb) cb.addEventListener('click',()=>{ S = has; render(true); });
+}
+
+function moralLabel(m){ return m<=-3?'Бессовестный':m<=-1?'Циничный':m===0?'Прагматичный':m<=2?'Совестливый':'Принципиальный'; }
+function strangeLabel(v){ return v===0?'Ничего странного':v<=2?'Совпадения':v<=4?'Слишком много совпадений':v<=6?'Что-то не так':'Это не совпадения'; }
+function relLabel(v){ return v<=-3?['Враждебно','l-bad']:v<0?['Прохладно','l-bad']:v===0?['Нейтрально','l-mid']:v<=2?['Тепло','l-good']:['Близко','l-good']; }
+
+function renderPanel(){
+  let h = `<button class="btn-ghost close-panel" id="closePanel" type="button">Закрыть</button>
+  <div class="p-head"><div class="p-name">Лео Вельт</div><div class="p-sub">19 лет · студент-инженер</div></div>
+  <section class="p-sec"><h2>Характеристики</h2>`;
+  STAT_ORDER.forEach(k=>{
+    const v = S.stats[k];
+    h += `<div class="stat"><span class="n">${STATS[k]}</span><span class="pips">${Array.from({length:10},(_,i)=>`<i class="${i<v?'on':''}"></i>`).join('')}</span><span class="v">${v}</span></div>`;
+  });
+  h += `</section><section class="p-sec"><h2>Шкалы</h2>
+    <div class="meter-row"><div class="meter-top"><span class="n">Мораль</span><span class="l">${moralLabel(S.moral)}</span></div>
+      <div class="moral" aria-label="Мораль ${S.moral}"><b style="left:${(S.moral+5)*10}%"></b></div></div>
+    ${SHOW_STRANGE ? `<div class="meter-row"><div class="meter-top"><span class="n">Странность</span><span class="l strange-l">${strangeLabel(S.strange)}</span></div>
+      <div class="strange">${Array.from({length:10},(_,i)=>`<i class="${i<S.strange?'on':''}"></i>`).join('')}</div></div>` : ''}
+  </section><section class="p-sec"><h2>Связи</h2>`;
+  Object.keys(REL).forEach(k=>{
+    if(!(k in S.rel)) return;
+    const v = S.rel[k]; const [lab,cls] = relLabel(v);
+    const left = v<0 ? 50+v*10 : 50; const w = Math.abs(v)*10;
+    const col = v<0 ? 'var(--bad)' : 'var(--good)';
+    h += `<div class="rel"><span class="n">${REL[k]}</span><span class="l ${cls}">${lab}</span><span class="bar"><b style="left:${left}%;width:${w}%;background:${col}"></b></span></div>`;
+  });
+  h += `</section>
+  <div class="money"><span>Кредиты</span><b>${credits(S.money)}</b></div>
+  <div class="p-foot"><button class="btn-ghost" id="restartBtn" type="button">Начать заново</button></div>`;
+  $panel.innerHTML = h;
+  const rb = document.getElementById('restartBtn');
+  let armed = null;
+  rb.addEventListener('click',()=>{
+    if(armed){ clearTimeout(armed); clearSave(); S = fresh(); closePanel(); render(true); return; }
+    rb.textContent = 'Точно? Нажми ещё раз';
+    armed = setTimeout(()=>{ armed=null; rb.textContent='Начать заново'; }, 3000);
+  });
+  document.getElementById('closePanel').addEventListener('click', closePanel);
+}
+
+function renderEnd(){
+  $where.textContent = 'Сентябрь · конец демо';
+  const mem = MEMORY.filter(([f])=>S.flags[f]);
+  const statLines = STAT_ORDER.map(k=>{
+    const d = S.stats[k]-START_STATS[k];
+    return `<div class="end-line"><span>${STATS[k]}</span><b>${S.stats[k]}${d?` <span style="color:var(--amber)">(${d>0?'+':''}${d})</span>`:''}</b></div>`;
+  }).join('');
+  const relLines = Object.keys(REL).filter(k=>k in S.rel).map(k=>{
+    const [lab,cls] = relLabel(S.rel[k]);
+    return `<div class="end-line"><span>${REL[k]}</span><b class="${cls}">${lab}</b></div>`;
+  }).join('');
+  $story.innerHTML = `${Art.html('city','Ночной Ноктис')}
+  <div class="scene-head fade"><span class="scene-num">Конец демо</span><h1>Сентябрь позади</h1><p class="scene-place">Дальше: октябрь — очная сверка в управе, Дана, Тео и Грач</p></div>
+  <div class="text fade"><p>Сентябрь закончился. Ничего не случилось, если не считать того, что случилось всё. Вот каким вышел твой Лео.</p></div>
+  <div class="end-grid fade">
+    <div class="end-box"><h3>Характеристики</h3>${statLines}</div>
+    <div class="end-box"><h3>Шкалы</h3>
+      <div class="end-line"><span>Мораль</span><b>${moralLabel(S.moral)}</b></div>
+      ${SHOW_STRANGE ? `<div class="end-line"><span>Странность</span><b style="color:var(--magenta)">${S.strange} · ${strangeLabel(S.strange)}</b></div>` : ''}
+      <div class="end-line"><span>Кредиты</span><b>${credits(S.money)}</b></div>
+    </div>
+    <div class="end-box"><h3>Связи</h3>${relLines}</div>
+  </div>
+  <h2 class="end-h">Что запомнил мир</h2>
+  <ul class="memory">${mem.map(([f,t,st])=>`<li class="${st?'strange-mem':''}">${esc(t)}</li>`).join('') || '<li>Ты прошёл сентябрь тихо. Слишком тихо для Ноктиса.</li>'}</ul>
+  <div class="title-actions" style="margin-top:30px">
+    <button class="next" id="againBtn" type="button">Сыграть заново</button>
+    <span class="hint">Другие выборы меняют сцены, проверки и то, что заметят люди вокруг.</span>
+  </div>`;
+  document.getElementById('againBtn').addEventListener('click',()=>{ S = fresh(); go('p1'); });
+}
+
+function render(scroll){
+  if(S.node==='intro') renderIntro();
+  else if(S.node==='END') renderEnd();
+  else renderNode();
+  renderPanel();
+  Art.all();
+  const n = NODES[S.node];
+  Music.setMood(n ? (n.mood || SCENES[n.scene].mood) : (S.node==='END' ? 'home' : 'night'));
+  if(scroll) window.scrollTo(0,0);
+}
+
+/* Панель на телефоне */
+const $leoBtn = document.getElementById('leoBtn');
+function openPanel(){ document.body.classList.add('panel-open'); $leoBtn.setAttribute('aria-expanded','true'); }
+function closePanel(){ document.body.classList.remove('panel-open'); $leoBtn.setAttribute('aria-expanded','false'); }
+$leoBtn.addEventListener('click',()=> document.body.classList.contains('panel-open') ? closePanel() : openPanel());
+document.getElementById('backdrop').addEventListener('click', closePanel);
+
+/* Клавиатура */
+document.addEventListener('keydown', e=>{
+  if(e.target && (e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA')) return;
+  if(e.key==='Escape'){ closePanel(); return; }
+  const nb = document.getElementById('nextBtn');
+  if(nb && (e.key==='Enter' || e.key===' ') && document.activeElement!==nb){ e.preventDefault(); nb.click(); return; }
+  if(/^[1-9]$/.test(e.key)){
+    const b = $story.querySelector(`.choice[data-key="${e.key}"]`);
+    if(b){ e.preventDefault(); b.click(); }
+  }
+});
+
+/* Дождь */
+(function rain(){
+  const cv = document.getElementById('rain'); const ctx = cv.getContext('2d');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W=0,H=0,drops=[];
+  function size(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const count = Math.round(W*H/9000);
+    drops = Array.from({length:count},()=>({x:Math.random()*W, y:Math.random()*H, l:8+Math.random()*16, v:6+Math.random()*9, a:.05+Math.random()*.12}));
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.lineWidth = 1;
+    for(const d of drops){
+      ctx.strokeStyle = `rgba(160,190,205,${d.a})`;
+      ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d.x-d.l*.18, d.y+d.l); ctx.stroke();
+    }
+  }
+  function tick(){
+    if(!document.hidden){
+      for(const d of drops){ d.y += d.v; d.x -= d.v*.18; if(d.y>H){ d.y = -d.l; d.x = Math.random()*(W+40); } }
+      draw();
+    }
+    requestAnimationFrame(tick);
+  }
+  size(); window.addEventListener('resize', size);
+  if(reduce) draw(); else requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   МУЗЫКА (процедурная, Web Audio)
+   Позже можно заменить готовыми треками: TRACKS = {home:'music/home.mp3', ...}
+   ============================================================ */
+const MOODS = {
+  home:  {tempo:72,  bars:8, chords:[[57,60,64,67,71],[53,57,60,64,67],[48,55,59,64,67],[55,59,62,64,69]], pad:.20, cutoff:950,  pluck:{p:.32, oct:12, type:'triangle', every:2, lvl:.07}, bass:'root', wet:.35},
+  street:{tempo:100, bars:8, chords:[[50,53,57,60,64],[46,50,53,57,60],[53,57,60,64],[48,52,55,59,62]], pad:.14, cutoff:800,  pluck:{p:.85, oct:12, type:'square', every:1, lvl:.028, arp:true}, bass:'eighth', wet:.28},
+  uni:   {tempo:76,  bars:8, chords:[[52,55,59,62,66],[48,52,55,59,64],[55,59,62,66,71],[50,54,57,62,64]], pad:.12, cutoff:1700, pluck:{p:.45, oct:24, type:'sine', every:2, lvl:.07}, bass:'none', wet:.5},
+  night: {tempo:56,  bars:8, chords:[[38,45,50,53,58],[37,44,49,52,55]], pad:.22, cutoff:520, pluck:{p:.12, oct:24, type:'sine', every:2, lvl:.05}, bass:'none', heart:true, wet:.45},
+  tense: {tempo:132, bars:4, chords:[[38,41,44,50],[37,40,43,49]], pad:.16, cutoff:1200, pluck:{p:.9, oct:24, type:'sawtooth', every:1, lvl:.02, arp:true}, bass:'sixteenth', heart:true, wet:.2},
+};
+const Music = (()=>{
+  const PREF = 'noctis-sound';
+  let on = true; try{ on = localStorage.getItem(PREF)!=='off'; }catch(e){}
+  let ctx=null, master=null, reverb=null, layer=null, send=null, mood=null, want='home';
+  let step=0, nextT=0, timer=null;
+  const mtof = m => 440*Math.pow(2,(m-69)/12);
+
+  function impulse(sec){
+    const len = ctx.sampleRate*sec, b = ctx.createBuffer(2,len,ctx.sampleRate);
+    for(let c=0;c<2;c++){ const d=b.getChannelData(c); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3); }
+    return b;
+  }
+  function noiseBuf(){
+    const len = ctx.sampleRate*2, b = ctx.createBuffer(1,len,ctx.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<len;i++) d[i]=Math.random()*2-1; return b;
+  }
+  function init(){
+    if(ctx) return true;
+    const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return false;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = 0;
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value=-18; comp.ratio.value=3;
+    master.connect(comp); comp.connect(ctx.destination);
+    reverb = ctx.createConvolver(); reverb.buffer = impulse(3.5); reverb.connect(master);
+    // Дождь и гул города: всегда тихо на фоне
+    const nb = noiseBuf();
+    const rain = ctx.createBufferSource(); rain.buffer=nb; rain.loop=true;
+    const hp = ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=900;
+    const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=5500;
+    const rg = ctx.createGain(); rg.gain.value=.028;
+    rain.connect(hp); hp.connect(lp); lp.connect(rg); rg.connect(master); rain.start();
+    const hum = ctx.createBufferSource(); hum.buffer=nb; hum.loop=true; hum.playbackRate.value=.7;
+    const hl = ctx.createBiquadFilter(); hl.type='lowpass'; hl.frequency.value=160;
+    const hg = ctx.createGain(); hg.gain.value=.05;
+    hum.connect(hl); hl.connect(hg); hg.connect(master); hum.start();
+    timer = setInterval(tick, 60);
+    document.addEventListener('visibilitychange', ()=>{ if(!ctx) return; if(document.hidden) ctx.suspend(); else if(on) ctx.resume(); });
+    return true;
+  }
+  function newLayer(m){
+    const now = ctx.currentTime;
+    if(layer){ const old=layer, os=send; old.gain.setTargetAtTime(0, now, .9); setTimeout(()=>{ try{old.disconnect(); os.disconnect();}catch(e){} }, 6000); }
+    layer = ctx.createGain(); layer.gain.value = 0; layer.gain.setTargetAtTime(1, now+.2, 1.2);
+    send = ctx.createGain(); send.gain.value = m.wet;
+    layer.connect(master); layer.connect(send); send.connect(reverb);
+    step = 0; nextT = now+.15;
+  }
+  function pad(m, notes, t, dur){
+    const f = ctx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=m.cutoff; f.Q.value=.6;
+    const g = ctx.createGain(); const lvl = m.pad/notes.length;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(lvl,t+2.2); g.gain.setValueAtTime(lvl,t+dur); g.gain.linearRampToValueAtTime(0,t+dur+3);
+    f.connect(g); g.connect(layer);
+    notes.forEach(n=>[-7,7].forEach(cent=>{ const o=ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=mtof(n); o.detune.value=cent; o.connect(f); o.start(t); o.stop(t+dur+3.1); }));
+  }
+  function pluck(freq, t, type, lvl, dec){
+    const o=ctx.createOscillator(), g=ctx.createGain(), f=ctx.createBiquadFilter();
+    o.type=type; o.frequency.value=freq; f.type='lowpass'; f.frequency.value=2600;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(lvl,t+.006); g.gain.exponentialRampToValueAtTime(.0001,t+dec);
+    o.connect(f); f.connect(g); g.connect(layer); o.start(t); o.stop(t+dec+.05);
+  }
+  function bass(freq, t, dec, lvl){
+    const o=ctx.createOscillator(), g=ctx.createGain(), f=ctx.createBiquadFilter();
+    o.type='triangle'; o.frequency.value=freq; f.type='lowpass'; f.frequency.value=380;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(lvl,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+dec);
+    o.connect(f); f.connect(g); g.connect(layer); o.start(t); o.stop(t+dec+.05);
+  }
+  function thump(t, lvl){
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(95,t); o.frequency.exponentialRampToValueAtTime(42,t+.16);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(lvl,t+.008); g.gain.exponentialRampToValueAtTime(.0001,t+.3);
+    o.connect(g); g.connect(layer); o.start(t); o.stop(t+.35);
+  }
+  function schedule(m, s, t){
+    const spb = 60/m.tempo;                            // bars = сколько долей держится один аккорд
+    const stepsPerChord = m.bars*4;
+    const ci = Math.floor(s/stepsPerChord) % m.chords.length, ch = m.chords[ci], inChord = s % stepsPerChord;
+    if(inChord===0){
+      pad(m, ch, t, m.bars*spb);
+      if(m.bass==='root') bass(mtof(ch[0]-12), t, 2.5, .22);
+    }
+    if(m.bass==='eighth' && s%2===0) bass(mtof(ch[0]-12), t, .22, .2);
+    if(m.bass==='sixteenth') bass(mtof(ch[0]-12), t, .1, .17);
+    const p = m.pluck;
+    if(p && s%p.every===0 && Math.random()<p.p){
+      const idx = p.arp ? (s/p.every)%ch.length : Math.floor(Math.random()*ch.length);
+      pluck(mtof(ch[idx]+p.oct), t, p.type, p.lvl, p.arp ? .22 : 1.1);
+    }
+    if(m.heart){
+      const beatLen = m.tempo>100 ? 4 : 8;
+      if(s%beatLen===0) thump(t, .5); else if(s%beatLen===1) thump(t, .3);
+    }
+  }
+  function tick(){
+    if(!ctx || !layer || !mood) return;
+    const m = MOODS[mood], dt = 60/m.tempo/4;
+    while(nextT < ctx.currentTime + .3){ schedule(m, step, nextT); nextT += dt; step++; }
+  }
+  function apply(){
+    if(!ctx) return;
+    const now = ctx.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setTargetAtTime(on ? .55 : 0, now, .4);
+    if(on){ ctx.resume(); if(want!==mood){ mood=want; newLayer(MOODS[mood]); } }
+    else setTimeout(()=>{ if(!on && ctx) ctx.suspend(); }, 1500);
+  }
+  return {
+    get on(){ return on; },
+    unlock(){ if(!on) return; if(ctx && ctx.state==='running' && mood) return; if(init()) apply(); },
+    setMood(m){ want = MOODS[m] ? m : 'home'; if(ctx && on && want!==mood){ mood=want; newLayer(MOODS[mood]); } },
+    toggle(){ on=!on; try{ localStorage.setItem(PREF, on?'on':'off'); }catch(e){} if(on) init(); apply(); return on; },
+  };
+})();
+
+const $soundBtn = document.getElementById('soundBtn');
+function syncSoundBtn(){ $soundBtn.setAttribute('aria-pressed', String(Music.on)); document.getElementById('soundLabel').textContent = Music.on ? 'Звук' : 'Без звука'; }
+$soundBtn.addEventListener('click', ()=>{ Music.toggle(); syncSoundBtn(); });
+syncSoundBtn();
+// Браузер разрешает звук только после действия игрока
+['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev, function once(e){
+  if(e.target && e.target.closest && e.target.closest('#soundBtn')) return;
+  Music.unlock();
+}, {passive:true}));
+
+/* ============================================================
+   ЗАСТАВКИ СЦЕН (рисуются кодом, пока нет иллюстраций)
+   ============================================================ */
+const Art = (()=>{
+  function rng(seed){ return ()=>{ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  function hash(s){ let h=2166136261; for(const c of s){ h^=c.charCodeAt(0); h=Math.imul(h,16777619); } return h>>>0; }
+  const A = 'rgba(240,168,71,', M = 'rgba(228,80,138,', C = 'rgba(150,220,235,';
+
+  function sky(x,W,H,top,mid,bot){ const g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,top); g.addColorStop(.6,mid); g.addColorStop(1,bot); x.fillStyle=g; x.fillRect(0,0,W,H); }
+  function glow(x,cx,cy,r,col,a){ const g=x.createRadialGradient(cx,cy,0,cx,cy,r); g.addColorStop(0,col+a+')'); g.addColorStop(1,col+'0)'); x.fillStyle=g; x.fillRect(cx-r,cy-r,r*2,r*2); }
+  function skyline(x,W,r,o){
+    let bx=-10;
+    while(bx<W){
+      const w=o.minW+r()*(o.maxW-o.minW), h=o.minH+r()*(o.maxH-o.minH), top=o.base-h;
+      x.fillStyle=o.color; x.fillRect(bx,top,w,h+2);
+      if(r()<.25){ x.fillRect(bx+w*.4,top-h*.12,w*.2,h*.12); if(r()<.5){ x.fillStyle=M+'.9)'; x.fillRect(bx+w*.5-1,top-h*.12-3,2,2); } }
+      const cw=Math.max(2,o.win), gap=o.win*1.9;
+      for(let wy=top+gap; wy<o.base-gap; wy+=gap) for(let wx=bx+gap*.7; wx<bx+w-gap*.7; wx+=gap){
+        if(r()<o.dens){ const c = r()<o.cyan ? C : A; x.fillStyle=c+(o.alpha*(.4+r()*.6))+')'; x.fillRect(wx,wy,cw,cw*1.3); }
+      }
+      bx+=w+(r()<.3?r()*8:0);
+    }
+  }
+  function fog(x,W,y,h,col,a){ const g=x.createLinearGradient(0,y-h,0,y+h); g.addColorStop(0,col+'0)'); g.addColorStop(.5,col+a+')'); g.addColorStop(1,col+'0)'); x.fillStyle=g; x.fillRect(0,y-h,W,h*2); }
+  function person(x,cx,base,h,col,lean=0){
+    x.fillStyle=col; const hr=h*.085;
+    x.beginPath(); x.arc(cx+lean*h*.12,base-h+hr,hr,0,Math.PI*2); x.fill();
+    x.beginPath();
+    x.moveTo(cx-h*.13+lean*h*.1,base-h+hr*2.1); x.lineTo(cx+h*.13+lean*h*.1,base-h+hr*2.1);
+    x.lineTo(cx+h*.1,base-h*.45); x.lineTo(cx-h*.1,base-h*.45); x.closePath(); x.fill();
+    x.fillRect(cx-h*.09,base-h*.46,h*.075,h*.46); x.fillRect(cx+h*.015,base-h*.46,h*.075,h*.46);
+  }
+  function reflect(x,W,H,y,r,n){
+    x.fillStyle='rgba(6,9,11,.55)'; x.fillRect(0,y,W,H-y);
+    for(let i=0;i<n;i++){ const c=r()<.3?C:(r()<.15?M:A); x.fillStyle=c+(.05+r()*.12)+')'; const rx=r()*W; x.fillRect(rx,y+r()*4,1+r()*2.5,(H-y)*(.3+r()*.7)); }
+  }
+  function neonText(x,t,cx,cy,size,col){
+    x.save(); x.font=`700 ${size}px "Unbounded","Arial Black",sans-serif`; x.textAlign='center'; x.textBaseline='middle';
+    x.shadowColor=col+'.9)'; x.shadowBlur=size*.8; x.fillStyle=col+'1)'; x.fillText(t,cx,cy); x.shadowBlur=0; x.fillStyle='rgba(255,240,220,.85)'; x.fillText(t,cx,cy); x.restore();
+  }
+  function holo(x,rx,ry,w,h,col,label){
+    x.save(); x.fillStyle=col+'.14)'; x.strokeStyle=col+'.8)'; x.lineWidth=1.5; x.shadowColor=col+'.9)'; x.shadowBlur=14;
+    x.fillRect(rx,ry,w,h); x.strokeRect(rx,ry,w,h); x.shadowBlur=0;
+    for(let yy=ry+3; yy<ry+h; yy+=4){ x.fillStyle=col+'.07)'; x.fillRect(rx,yy,w,1); }
+    x.font=`700 ${Math.round(h*.3)}px "Unbounded","Arial Black",sans-serif`; x.textAlign='center'; x.textBaseline='middle';
+    x.fillStyle=col+'.95)'; x.shadowColor=col+'1)'; x.shadowBlur=10; x.fillText(label,rx+w/2,ry+h/2); x.restore();
+  }
+
+  const DRAW = {
+    city(x,W,H,r){
+      sky(x,W,H,'#081014','#141C21','#2B2016');
+      glow(x,W*.7,H*.95,W*.6,A,.18);
+      skyline(x,W,r,{base:H*.82,minH:H*.25,maxH:H*.7,minW:W*.03,maxW:W*.08,color:'#10181D',win:2,dens:.18,cyan:.2,alpha:.35});
+      fog(x,W,H*.7,H*.12,'rgba(60,80,90,',.25);
+      skyline(x,W,r,{base:H*.9,minH:H*.12,maxH:H*.45,minW:W*.05,maxW:W*.12,color:'#0A1013',win:3,dens:.25,cyan:.3,alpha:.8});
+      const tx=W*.2; x.fillStyle='#070B0D'; x.fillRect(tx,H*.05,W*.05,H*.9); glow(x,tx+W*.025,H*.05,10,M,.9);
+      reflect(x,W,H,H*.9,r,60);
+    },
+    s1(x,W,H,r){
+      sky(x,W,H,'#0A1115','#161D22','#2A1F16');
+      skyline(x,W,r,{base:H*.7,minH:H*.2,maxH:H*.5,minW:W*.04,maxW:W*.09,color:'#11191E',win:2,dens:.15,cyan:.2,alpha:.3});
+      fog(x,W,H*.6,H*.1,'rgba(70,80,85,',.25);
+      // эстакада
+      x.fillStyle='#070B0D'; x.fillRect(0,H*.14,W,H*.12);
+      for(let i=0;i<W;i+=W/14){ x.fillStyle=A+'.6)'; x.fillRect(i+10,H*.26,3,2); glow(x,i+11,H*.27,14,A,.18); }
+      [W*.08,W*.9].forEach(px=>{ x.fillStyle='#080C0E'; x.fillRect(px,H*.26,W*.035,H*.62); });
+      // склад
+      const L=W*.22, R=W*.76, T=H*.36, B=H*.86;
+      x.fillStyle='#161E24'; x.fillRect(L,T,R-L,B-T); x.fillStyle='#1D272E'; x.fillRect(L,T,R-L,4);
+      [[.3,true],[.5,false],[.7,false]].forEach(([p,lit])=>{ const wx=L+(R-L)*p-W*.035, wy=T+H*.06; x.fillStyle= lit?A+'.85)':'rgba(40,52,60,1)'; x.fillRect(wx,wy,W*.07,H*.1); if(lit) glow(x,wx+W*.035,wy+H*.05,W*.08,A,.25); x.fillStyle='#0B1114'; x.fillRect(wx+W*.034,wy,2,H*.1); });
+      // ставня
+      const sL=L+(R-L)*.3, sR=L+(R-L)*.7, sT=T+H*.25;
+      x.fillStyle='#252F36'; x.fillRect(sL,sT,sR-sL,B-sT);
+      for(let yy=sT;yy<B-H*.12;yy+=5){ x.fillStyle='rgba(0,0,0,.25)'; x.fillRect(sL,yy,sR-sL,1); }
+      const lg=x.createLinearGradient(0,B-H*.12,0,B); lg.addColorStop(0,A+'.25)'); lg.addColorStop(1,A+'.8)'); x.fillStyle=lg; x.fillRect(sL,B-H*.12,sR-sL,H*.12);
+      neonText(x,'ВЕЛЬТ · РЕМОНТ',(sL+sR)/2,sT-H*.05,Math.max(10,W*.022),A);
+      // свет на мокром асфальте
+      x.fillStyle='#0A0F12'; x.fillRect(0,B,W,H-B);
+      const sp=x.createLinearGradient(0,B,0,H); sp.addColorStop(0,A+'.45)'); sp.addColorStop(1,A+'0)');
+      x.fillStyle=sp; x.beginPath(); x.moveTo(sL,B); x.lineTo(sR,B); x.lineTo(sR+W*.1,H); x.lineTo(sL-W*.1,H); x.closePath(); x.fill();
+      reflect(x,W,H,B+2,r,40);
+    },
+    s2(x,W,H,r){
+      sky(x,W,H,'#0B0F16','#1B1622','#2A1627');
+      skyline(x,W,r,{base:H*.62,minH:H*.2,maxH:H*.55,minW:W*.03,maxW:W*.08,color:'#131722',win:2,dens:.2,cyan:.45,alpha:.4});
+      fog(x,W,H*.55,H*.1,'rgba(120,60,100,',.18);
+      // балка монорельса и поезд
+      x.fillStyle='#08090D'; x.fillRect(0,H*.4,W,H*.05);
+      [W*.2,W*.55,W*.85].forEach(px=>{ x.fillRect(px,H*.45,W*.02,H*.35); });
+      const tL=W*.04, tR=W*.66, tT=H*.29, tB=H*.4;
+      x.fillStyle='#1E2630'; x.beginPath(); x.moveTo(tL,tB); x.lineTo(tL,tT+8); x.quadraticCurveTo(tL,tT,tL+10,tT); x.lineTo(tR-W*.04,tT); x.quadraticCurveTo(tR,tT,tR,tB); x.closePath(); x.fill();
+      for(let wx=tL+W*.015; wx<tR-W*.05; wx+=W*.035){ x.fillStyle=C+(.55+r()*.3)+')'; x.fillRect(wx,tT+H*.025,W*.022,H*.04); }
+      glow(x,(tL+tR)/2,tT+H*.05,W*.35,C,.08);
+      holo(x,W*.1,H*.08,W*.26,H*.13,M,'ПАНДОРА');
+      holo(x,W*.66,H*.12,W*.26,H*.12,C,'ЦЕРЕБРА');
+      // платформа и толпа
+      x.fillStyle='#0B0E12'; x.fillRect(0,H*.8,W,H*.2);
+      x.fillStyle=A+'.7)'; x.fillRect(0,H*.8,W,2);
+      for(let i=0;i<34;i++){ const h=H*(.2+r()*.1); person(x,r()*W*.8,H*(.9+r()*.1),h,`rgba(5,7,9,${.85+r()*.15})`); }
+      // бегущий мальчишка
+      const kx=W*.86, kb=H*.97, kh=H*.2; person(x,kx,kb,kh,'#04060A',.8);
+      x.fillStyle='rgba(255,140,40,1)'; x.shadowColor='rgba(255,140,40,1)'; x.shadowBlur=8; x.fillRect(kx+kh*.12,kb-kh+kh*.07,3,2); x.fillRect(kx+kh*.17,kb-kh+kh*.07,3,2); x.shadowBlur=0;
+    },
+    s3(x,W,H,r){
+      const g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#1B252B'); g.addColorStop(1,'#0E1417'); x.fillStyle=g; x.fillRect(0,0,W,H);
+      for(let px=0;px<W;px+=W/12){ x.fillStyle='rgba(255,255,255,.025)'; x.fillRect(px,0,1,H*.7); }
+      // окно
+      const wL=W*.06, wR=W*.52, wT=H*.12, wB=H*.6;
+      x.save(); x.beginPath(); x.rect(wL,wT,wR-wL,wB-wT); x.clip();
+      sky(x,W,H,'#0B1418','#15212A','#1E2A30');
+      skyline(x,W,r,{base:wB,minH:H*.12,maxH:H*.4,minW:W*.02,maxW:W*.05,color:'#0F171C',win:2,dens:.3,cyan:.5,alpha:.6});
+      x.restore();
+      x.strokeStyle='#2E3B43'; x.lineWidth=4; x.strokeRect(wL,wT,wR-wL,wB-wT);
+      [1/3,2/3].forEach(p=>{ x.fillStyle='#2E3B43'; x.fillRect(wL+(wR-wL)*p-2,wT,4,wB-wT); });
+      // лампы под потолком
+      [W*.25,W*.7].forEach(lx=>{ x.fillStyle='rgba(210,240,245,.9)'; x.fillRect(lx-W*.08,H*.04,W*.16,3); glow(x,lx,H*.05,W*.15,C,.12); });
+      // стойка с оборудованием
+      x.fillStyle='#10171B'; x.fillRect(W*.86,H*.1,W*.1,H*.64);
+      for(let i=0;i<14;i++){ x.fillStyle=(r()<.5?A:C)+'.9)'; x.fillRect(W*.875+r()*W*.07,H*.13+r()*H*.55,3,2); }
+      // стол и стенд
+      x.fillStyle='#0C1215'; x.fillRect(0,H*.74,W,H*.26); x.fillStyle='#26333A'; x.fillRect(0,H*.74,W,2);
+      const mL=W*.58, mR=W*.82, mT=H*.3, mB=H*.62;
+      x.fillStyle='#0A0F12'; x.fillRect(mL-6,mT-6,mR-mL+12,mB-mT+12); x.fillRect((mL+mR)/2-5,mB,10,H*.12);
+      const sg=x.createLinearGradient(0,mT,0,mB); sg.addColorStop(0,'rgba(215,245,250,.95)'); sg.addColorStop(1,'rgba(150,210,225,.8)'); x.fillStyle=sg; x.fillRect(mL,mT,mR-mL,mB-mT);
+      glow(x,(mL+mR)/2,(mT+mB)/2,W*.25,C,.18);
+      x.strokeStyle='rgba(40,70,80,.8)'; x.lineWidth=2; x.beginPath(); x.arc((mL+mR)/2,(mT+mB)/2-H*.03,H*.07,0,Math.PI*2); x.stroke();
+      x.fillStyle='rgba(40,70,80,.85)'; x.font=`700 ${Math.max(8,W*.014)}px "Unbounded",sans-serif`; x.textAlign='center'; x.fillText('ЦЕРЕБРА',(mL+mR)/2,mB-H*.05);
+      person(x,W*.53,H*1.02,H*.46,'#05080A'); person(x,W*.9,H*1.02,H*.42,'#05080A',-.3);
+    },
+    rd_train(x,W,H,r){
+      x.fillStyle='#0D1316'; x.fillRect(0,0,W,H);
+      x.fillStyle='rgba(200,230,240,.5)'; x.fillRect(0,H*.03,W,2); glow(x,W/2,0,W*.5,C,.06);
+      [[.04,.3],[.36,.62],[.68,.94]].forEach(([a,b])=>{
+        const L=W*a, R=W*b, T=H*.18, B=H*.58;
+        x.save(); x.beginPath(); x.rect(L,T,R-L,B-T); x.clip();
+        x.fillStyle='#0A0E14'; x.fillRect(L,T,R-L,B-T);
+        for(let i=0;i<40;i++){ const c=r()<.4?C:(r()<.2?M:A); x.fillStyle=c+(.2+r()*.5)+')'; const y=T+r()*(B-T), l=W*(.03+r()*.12); x.fillRect(L+r()*(R-L)-l/2,y,l,1+r()*2); }
+        x.restore(); x.strokeStyle='#26323A'; x.lineWidth=5; x.strokeRect(L,T,R-L,B-T);
+      });
+      [W*.33,W*.65].forEach(px=>{ x.fillStyle='#3A4850'; x.fillRect(px,0,4,H); });
+      x.fillStyle='#0A0E10'; x.fillRect(0,H*.82,W,H*.18);
+      person(x,W*.2,H*1.05,H*.62,'#040608');
+      person(x,W*.52,H*1.05,H*.7,'#040608',-.4);
+      x.fillStyle='rgba(120,220,210,.9)'; x.shadowColor='rgba(120,220,210,1)'; x.shadowBlur=8; x.fillRect(W*.45,H*.62,6,3); x.shadowBlur=0;
+    },
+    rd_shop(x,W,H,r){
+      sky(x,W,H,'#0A1014','#11181C','#171D20');
+      x.fillStyle='#141B20'; x.fillRect(0,H*.08,W,H*.78);
+      const L=W*.34, R=W*.9, T=H*.3, B=H*.84;
+      const g=x.createLinearGradient(0,T,0,B); g.addColorStop(0,'rgba(215,240,240,.85)'); g.addColorStop(1,'rgba(160,210,215,.7)'); x.fillStyle=g; x.fillRect(L,T,R-L,B-T);
+      for(let yy=T+H*.1;yy<B;yy+=H*.12){ x.fillStyle='rgba(40,60,70,.6)'; x.fillRect(L,yy,R-L,3); for(let i=0;i<14;i++){ x.fillStyle=`hsla(${r()*360},45%,55%,.7)`; x.fillRect(L+r()*(R-L),yy-H*.05,W*.012,H*.05); } }
+      glow(x,(L+R)/2,B,W*.45,C,.2);
+      neonText(x,'ЛАККИ 24',(L+R)/2,H*.18,Math.max(11,W*.035),A);
+      // автомат
+      const vL=W*.08, vR=W*.24, vT=H*.28, vB=H*.86;
+      x.fillStyle='#1C2830'; x.fillRect(vL,vT,vR-vL,vB-vT);
+      x.fillStyle='rgba(120,220,230,.85)'; x.fillRect(vL+6,vT+6,vR-vL-12,(vB-vT)*.55);
+      for(let row=0;row<5;row++) for(let col=0;col<4;col++){ x.fillStyle=`hsla(${[10,200,330,45][col]},60%,55%,.9)`; x.fillRect(vL+10+col*((vR-vL-20)/4),vT+12+row*((vB-vT)*.1),(vR-vL-20)/4-4,(vB-vT)*.07); }
+      glow(x,(vL+vR)/2,(vT+vB)/2,W*.15,C,.15);
+      x.fillStyle='#090D10'; x.fillRect(0,H*.86,W,H*.14);
+      reflect(x,W,H,H*.87,r,40);
+      person(x,W*.28,H*.98,H*.5,'#040608',-.2);
+    },
+    rd_alley(x,W,H,r){
+      x.fillStyle='#07090B'; x.fillRect(0,0,W,H);
+      glow(x,W*.5,H*.45,W*.2,M,.35);
+      x.fillStyle='rgba(228,80,138,.3)'; x.fillRect(W*.46,H*.2,W*.08,H*.5);
+      x.fillStyle='#10161A'; x.beginPath(); x.moveTo(0,0); x.lineTo(W*.44,H*.2); x.lineTo(W*.44,H*.72); x.lineTo(0,H); x.closePath(); x.fill();
+      x.fillStyle='#0D1316'; x.beginPath(); x.moveTo(W,0); x.lineTo(W*.56,H*.2); x.lineTo(W*.56,H*.72); x.lineTo(W,H); x.closePath(); x.fill();
+      x.strokeStyle='#1F292F'; x.lineWidth=3; [.3,.42].forEach(p=>{ x.beginPath(); x.moveTo(0,H*p); x.lineTo(W*.44,H*(.2+p*.25)); x.stroke(); });
+      x.fillStyle=A+'1)'; x.fillRect(W*.24,H*.2,W*.05,4); glow(x,W*.265,H*.22,W*.06,A,.6);
+      const cg=x.createLinearGradient(0,H*.22,0,H); cg.addColorStop(0,A+'.22)'); cg.addColorStop(1,A+'0)'); x.fillStyle=cg; x.beginPath(); x.moveTo(W*.24,H*.22); x.lineTo(W*.29,H*.22); x.lineTo(W*.42,H); x.lineTo(W*.1,H); x.closePath(); x.fill();
+      x.fillStyle='#050709'; x.fillRect(W*.14,H*.52,W*.18,H*.04);
+      // сидящий мужчина с протезом
+      x.fillStyle='#020304'; x.beginPath(); x.arc(W*.24,H*.62,H*.05,0,Math.PI*2); x.fill(); x.fillRect(W*.2,H*.66,W*.08,H*.18); x.fillRect(W*.2,H*.82,W*.14,H*.05);
+      for(let i=0;i<9;i++){ const c=r()<.5?A:M; x.fillStyle=c+'1)'; x.shadowColor=c+'1)'; x.shadowBlur=6; x.fillRect(W*.29+r()*W*.04,H*.7+r()*H*.08,2,2); } x.shadowBlur=0;
+      reflect(x,W,H,H*.9,r,25);
+    },
+    s4(x,W,H,r){
+      x.fillStyle='#07090B'; x.fillRect(0,0,W,H);
+      // ставня приоткрыта, свет улицы
+      const L=W*.4, R=W*.8, T=H*.12, B=H*.74;
+      x.fillStyle='#1A2127'; x.fillRect(L,T,R-L,B-T);
+      for(let yy=T;yy<B-H*.14;yy+=5){ x.fillStyle='rgba(0,0,0,.3)'; x.fillRect(L,yy,R-L,1); }
+      const sg=x.createLinearGradient(0,B-H*.14,0,B); sg.addColorStop(0,'rgba(120,170,200,.35)'); sg.addColorStop(1,'rgba(150,200,225,.75)'); x.fillStyle=sg; x.fillRect(L,B-H*.14,R-L,H*.14);
+      const fl=x.createLinearGradient(0,B,0,H); fl.addColorStop(0,'rgba(140,190,215,.3)'); fl.addColorStop(1,'rgba(140,190,215,0)'); x.fillStyle=fl; x.beginPath(); x.moveTo(L,B); x.lineTo(R,B); x.lineTo(R+W*.08,H); x.lineTo(L-W*.08,H); x.closePath(); x.fill();
+      // верстак с лампой
+      x.fillStyle='#0E1316'; x.fillRect(0,H*.62,W*.32,H*.06); x.fillRect(W*.02,H*.68,W*.02,H*.32); x.fillRect(W*.27,H*.68,W*.02,H*.32);
+      const lc=x.createLinearGradient(0,H*.18,0,H*.62); lc.addColorStop(0,A+'.55)'); lc.addColorStop(1,A+'.08)'); x.fillStyle=lc; x.beginPath(); x.moveTo(W*.14,H*.2); x.lineTo(W*.18,H*.2); x.lineTo(W*.28,H*.62); x.lineTo(W*.04,H*.62); x.closePath(); x.fill();
+      x.fillStyle=A+'1)'; x.fillRect(W*.13,H*.18,W*.06,5); glow(x,W*.16,H*.2,W*.06,A,.5);
+      // стена с инструментом
+      for(let i=0;i<12;i++){ x.fillStyle='rgba(60,72,80,.6)'; x.fillRect(W*.03+r()*W*.3,H*.28+r()*H*.2,2+r()*4,H*(.05+r()*.07)); }
+      // лестница и Лео
+      x.strokeStyle='#161D22'; x.lineWidth=6; x.beginPath(); x.moveTo(W*.88,H*.05); x.lineTo(W*1.02,H*.7); x.stroke();
+      for(let i=0;i<8;i++){ const t=i/8; x.fillStyle='#161D22'; x.fillRect(W*(.86+t*.14),H*(.05+t*.65),W*.06,4); }
+      person(x,W*.93,H*.46,H*.3,'#0B0F12');
+      // Барро с протезом и отец
+      const bx=W*.6, bb=H*.98, bh=H*.78;
+      person(x,W*.36,H*.99,H*.62,'#1A2127',.3);
+      person(x,bx,bb,bh,'#030405');
+      const fx=W*.36, fh=H*.62, sx=bx-bh*.12, sy=bb-bh*.78, ex=bx-bh*.32, ey=bb-bh*.66, hx=fx+fh*.12, hy=H*.99-fh*.8;
+      x.strokeStyle='#3C4A52'; x.lineCap='round'; x.lineWidth=bh*.07; x.beginPath(); x.moveTo(sx,sy); x.lineTo(ex,ey); x.lineTo(hx,hy); x.stroke();
+      x.strokeStyle=A+'.6)'; x.lineWidth=1.5; x.beginPath(); x.moveTo(sx,sy-bh*.03); x.lineTo(ex,ey-bh*.03); x.lineTo(hx,hy-bh*.03); x.stroke();
+      [[sx,sy],[ex,ey],[hx,hy]].forEach(([jx,jy])=>{ x.fillStyle='#5A6870'; x.beginPath(); x.arc(jx,jy,bh*.035,0,Math.PI*2); x.fill(); x.fillStyle=A+'.9)'; x.beginPath(); x.arc(jx,jy,bh*.01,0,Math.PI*2); x.fill(); });
+    },
+  };
+
+  Object.assign(DRAW, {
+    s5(x,W,H,r){
+      sky(x,W,H,'#0B0E12','#1A1418','#2A1A14');
+      skyline(x,W,r,{base:H*.45,minH:H*.15,maxH:H*.4,minW:W*.04,maxW:W*.09,color:'#12161B',win:2,dens:.15,cyan:.3,alpha:.3});
+      glow(x,W*.5,H*.7,W*.6,A,.22);
+      // гирлянды
+      for(let g=0; g<4; g++){
+        const y0=H*(.12+g*.08), sag=H*(.06+r()*.04);
+        x.strokeStyle='rgba(20,24,28,1)'; x.lineWidth=1; x.beginPath(); x.moveTo(0,y0); x.quadraticCurveTo(W/2,y0+sag*2,W,y0); x.stroke();
+        for(let i=0;i<=24;i++){ const t=i/24, px=W*t, py=(1-t)*(1-t)*y0+2*(1-t)*t*(y0+sag*2)+t*t*y0; const c=r()<.55?A:(r()<.5?M:C);
+          x.fillStyle=c+'.95)'; x.beginPath(); x.arc(px,py+3,2.2,0,Math.PI*2); x.fill(); glow(x,px,py+3,9,c,.35); }
+      }
+      // навесы и прилавки
+      const cols=['#5A2A2A','#1F4A4A','#4A3A1E','#3A2346','#244032'];
+      for(let i=0;i<6;i++){
+        const L=W*(i/6)-W*.01, R=L+W/6+W*.02, T=H*.46, B=H*.56;
+        x.fillStyle=cols[i%cols.length]; x.beginPath(); x.moveTo(L,B); x.lineTo(L+W*.015,T); x.lineTo(R-W*.015,T); x.lineTo(R,B); x.closePath(); x.fill();
+        for(let k=L;k<R;k+=W*.02){ x.fillStyle='rgba(0,0,0,.22)'; x.fillRect(k,T,W*.01,B-T); }
+        x.fillStyle='#0E1215'; x.fillRect(L+4,H*.72,R-L-8,H*.08);
+        const lg=x.createLinearGradient(0,B,0,H*.72); lg.addColorStop(0,A+'.35)'); lg.addColorStop(1,A+'.05)'); x.fillStyle=lg; x.fillRect(L+4,B,R-L-8,H*.72-B);
+        for(let k=0;k<6;k++){ const c=r()<.5?A:(r()<.5?C:M); x.fillStyle=c+(.5+r()*.4)+')'; x.fillRect(L+8+r()*(R-L-20),H*.66+r()*H*.05,4+r()*6,3+r()*4); }
+      }
+      // пар
+      for(let i=0;i<5;i++) glow(x,W*(.1+r()*.8),H*(.45+r()*.1),W*.07,'rgba(230,230,225,',.12);
+      neonText(x,'ЛАПША',W*.18,H*.42,Math.max(10,W*.024),M);
+      neonText(x,'ИМПЛАНТЫ Б/У',W*.74,H*.42,Math.max(9,W*.02),C);
+      // толпа
+      for(let i=0;i<22;i++){ person(x,r()*W,H*(.96+r()*.06),H*(.28+r()*.1),`rgba(5,7,9,${.85+r()*.15})`, (r()-.5)*.3); }
+      reflect(x,W,H,H*.97,r,20);
+    },
+    s6(x,W,H,r){
+      x.fillStyle='#080B0A'; x.fillRect(0,0,W,H);
+      // полки
+      for(let row=0; row<4; row++){
+        const y=H*(.14+row*.17);
+        x.fillStyle='#1A201D'; x.fillRect(W*.02,y,W*.42,4); x.fillRect(W*.7,y,W*.28,4);
+        for(let i=0;i<9;i++){ const bx=W*.03+r()*W*.38, bw=W*(.02+r()*.04), bh=H*(.04+r()*.08); x.fillStyle=`rgba(${40+r()*30|0},${50+r()*30|0},${45+r()*25|0},1)`; x.fillRect(bx,y-bh,bw,bh); }
+        for(let i=0;i<5;i++){ const bx=W*.71+r()*W*.24, bw=W*(.02+r()*.03), bh=H*(.04+r()*.07); x.fillStyle=`rgba(${40+r()*30|0},${50+r()*30|0},${45+r()*25|0},1)`; x.fillRect(bx,y-bh,bw,bh); }
+        for(let i=0;i<3;i++){ const c=r()<.5?A:C; x.fillStyle=c+'.9)'; x.fillRect(W*.03+r()*W*.4,y-H*.02,2,2); }
+      }
+      // мониторы
+      [[.47,.2,1],[.56,.17,.5],[.5,.34,0]].forEach(([mx,my,on])=>{
+        const L=W*mx, T=H*my, w=W*.1, h=H*.13;
+        x.fillStyle='#0C100F'; x.fillRect(L-3,T-3,w+6,h+6);
+        if(on){ x.fillStyle=`rgba(120,210,190,${.25+on*.45})`; x.fillRect(L,T,w,h); for(let yy=T+4;yy<T+h;yy+=5){ x.fillStyle='rgba(10,30,25,.35)'; x.fillRect(L,yy,w*(.3+r()*.6),2); } glow(x,L+w/2,T+h/2,W*.1,'rgba(120,210,190,',.12*on); }
+        else { x.fillStyle='#141A18'; x.fillRect(L,T,w,h); }
+      });
+      // зелёная лампа
+      const lx=W*.62, ly=H*.1;
+      x.strokeStyle='#222'; x.lineWidth=2; x.beginPath(); x.moveTo(lx,0); x.lineTo(lx,ly); x.stroke();
+      x.fillStyle='rgba(90,200,120,1)'; x.beginPath(); x.moveTo(lx-W*.035,ly+H*.05); x.lineTo(lx+W*.035,ly+H*.05); x.lineTo(lx+W*.015,ly); x.lineTo(lx-W*.015,ly); x.closePath(); x.fill();
+      const cg=x.createLinearGradient(0,ly+H*.05,0,H); cg.addColorStop(0,'rgba(110,220,140,.3)'); cg.addColorStop(1,'rgba(110,220,140,0)');
+      x.fillStyle=cg; x.beginPath(); x.moveTo(lx-W*.035,ly+H*.05); x.lineTo(lx+W*.035,ly+H*.05); x.lineTo(lx+W*.2,H); x.lineTo(lx-W*.2,H); x.closePath(); x.fill();
+      glow(x,lx,ly+H*.06,W*.1,'rgba(110,220,140,',.35);
+      // прилавок и Тео
+      x.fillStyle='#101513'; x.fillRect(0,H*.74,W,H*.26); x.fillStyle='rgba(110,220,140,.25)'; x.fillRect(W*.42,H*.74,W*.4,2);
+      person(x,W*.66,H*.86,H*.5,'#050706');
+      x.fillStyle='rgba(220,235,230,.9)'; x.shadowColor='rgba(220,235,230,1)'; x.shadowBlur=6; x.beginPath(); x.arc(W*.66+H*.5*.03,H*.86-H*.5+H*.5*.085,2,0,Math.PI*2); x.fill(); x.shadowBlur=0;
+      for(let i=0;i<10;i++){ x.fillStyle=`rgba(${60+r()*40|0},${70+r()*40|0},${65+r()*30|0},1)`; x.fillRect(W*(.1+r()*.8),H*(.7+r()*.03),W*(.01+r()*.03),H*.04); }
+      person(x,W*.2,H*1.08,H*.55,'#0F1412',.2);
+    },
+  });
+
+  function draw(cv){
+    const kind = cv.dataset.art; const fn = DRAW[kind] || DRAW.city;
+    const box = cv.parentElement.getBoundingClientRect(); if(!box.width) return;
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    cv.width = Math.round(box.width*dpr); cv.height = Math.round(box.height*dpr);
+    const x = cv.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
+    fn(x, box.width, box.height, rng(hash(kind)));
+  }
+  function all(){ document.querySelectorAll('canvas[data-art]').forEach(draw); }
+  let t=null; window.addEventListener('resize', ()=>{ clearTimeout(t); t=setTimeout(all,150); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+  return {all, html(kind, alt){
+    const sc = SCENES[kind];
+    if(sc && sc.img) return `<figure class="art"><img src="${esc(sc.img)}" alt="${esc(alt||'')}"></figure>`;
+    return `<figure class="art" role="img" aria-label="${esc(alt||'')}"><canvas data-art="${esc(kind)}"></canvas></figure>`;
+  }};
+})();
+
+/* Старт */
+function start(data){
+  S = (data && data.S) || load() || fresh();
+  render();
+}
+if(window.claude && window.claude.hot && window.claude.hot.snapshot){ window.claude.hot.snapshot(()=>({S})); }
+if(window.claude && window.claude.hot && window.claude.hot.ready){ window.claude.hot.ready(start); }
+else { start((window.claude && window.claude.hot && window.claude.hot.data) || {}); }
+</script>
