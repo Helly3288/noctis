@@ -9,8 +9,7 @@
 - `docs/scenes.md` — каркас сцен на год. `docs/prompts.md` — промпты для иллюстраций.
 
 ## Публикация
-1. Правка `src/game.html` → `python3 tools/build.py` → коммит → push в `main` (GitHub Pages: https://helly3288.github.io/noctis/).
-2. Та же версия публикуется артефактом на claude.ai: https://claude.ai/artifact/8QTG6DAJkTX1cZUVGsJb4D (публиковать `src/game.html`, обновлять по этому url).
+Правка `src/game.html` → `python3 tools/build.py` → коммит → push в `main`. Игра живёт только на GitHub Pages: https://helly3288.github.io/noctis/ (артефакт на claude.ai удалён по просьбе автора, новый не создавать).
 
 ## Правила, которые легко нарушить
 - Странность: явных моментов не больше одного в месяц; скрытая Странность — побочный эффект разумных выборов, шкала скрыта до раскрытия правды (`SHOW_STRANGE = false`).
