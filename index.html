@@ -3077,12 +3077,12 @@ function renderNode(){
 }
 
 function renderIntro(){
-  $where.textContent = 'Прототип · сентябрь';
+  $where.textContent = 'Год Лео Вельта';
   const has = load();
   const canContinue = has && has.node!=='intro';
   $story.innerHTML = `<div class="title-screen">
     ${Art.html('city','Ночной Ноктис')}
-    <span class="eyebrow">Нарративная РПГ · прототип</span>
+    <span class="eyebrow">Нарративная РПГ · киберпанк</span>
     <h1 class="logo">НОКТИС</h1>
     <p class="subtitle">Год Лео Вельта</p>
     <p class="blurb">Лео девятнадцать. Он учится на инженера, по вечерам чинит чужие импланты в мастерской отца и уверен, что его жизнь самая обычная в Ноктисе. До этого сентября так и было.</p>
@@ -3090,7 +3090,7 @@ function renderIntro(){
       ${canContinue ? `<button class="next" id="contBtn" type="button">Продолжить</button><button class="btn-ghost" id="newBtn" type="button">Начать заново</button>`
                     : `<button class="next" id="newBtn" type="button">Начать</button>`}
     </div>
-    <p class="rules">Характеристики растут от поступков: чем Лео занимается, тем он и становится. Когда что-то растёт, игра об этом скажет. Наведи на вариант (на телефоне — нажми один раз), чтобы увидеть, что он даст.</p>
+    <p class="rules">Один год, сентябрь–апрель. Около трёх часов, пять финалов. Характеристики растут от поступков: чем Лео занимается, тем он и становится. Когда что-то растёт, игра об этом скажет. Наведи на вариант (на телефоне — нажми один раз), чтобы увидеть, что он даст.</p>
     <span class="hint">Выборы: клавиши 1–6 или клик. Далее: Enter.</span>
   </div>`;
   document.getElementById('newBtn').addEventListener('click',()=>{ S = fresh(); go('p1'); });
