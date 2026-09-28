@@ -231,6 +231,12 @@ body{
 .money{display:flex;justify-content:space-between;font-size:14px;color:var(--text-2)}
 .money b{font-family:var(--mono);font-weight:400;color:var(--text);font-variant-numeric:tabular-nums}
 .p-foot{display:flex;flex-direction:column;gap:8px}
+.p-sec h2.h-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.help-t{background:none;border:0;padding:0;font:inherit;font-weight:500;letter-spacing:.08em;color:var(--amber);cursor:pointer;text-transform:none}
+.help-t:hover{text-decoration:underline}
+.s-help{font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:-5px}
+.s-help b{color:var(--text-2);font-weight:500}
+@media (min-width: 901px){ .panel{max-height:calc(100vh - 90px);overflow-y:auto;padding-right:6px} }
 .close-panel{display:none}
 
 /* End */
@@ -283,8 +289,8 @@ h2.end-h{font-family:var(--display);font-weight:500;font-size:20px;margin:34px 0
     <main class="story" id="story" aria-live="polite"></main>
     <aside class="panel" id="panel" aria-label="Персонаж"></aside>
   </div>
+  <div class="backdrop" id="backdrop"></div>
 </div>
-<div class="backdrop" id="backdrop"></div>
 
 <script>
 /* ============================================================
@@ -294,6 +300,26 @@ h2.end-h{font-family:var(--display);font-weight:500;font-size:20px;margin:34px 0
 const STATS = {body:'Тело', agi:'Ловкость', tech:'Техника', mind:'Рассудок', charm:'Обаяние', will:'Воля', control:'Контроль'};
 const STAT_ORDER = ['body','agi','tech','mind','charm','will'];
 const START_STATS = {body:4, agi:4, tech:6, mind:6, charm:3, will:4, control:0};
+/* Короткие описания для панели Лео */
+const STAT_HELP = {
+  body:'Сила и выносливость: драки, погоня напролом, тяжёлая работа.',
+  agi:'Быстрые руки и ноги: крыши, погони, пролезть незаметно.',
+  tech:'Чинить и вскрывать железо: замки, стенды, кабины, дроны.',
+  mind:'Замечать детали и думать наперёд. С высоким Рассудком Лео видит то, что другие пропускают.',
+  charm:'Говорить с людьми: уговорить, отшутиться, соврать.',
+  will:'Держать себя в руках: не испугаться, не сорваться, настоять на своём.',
+  control:'Власть над даром. Чем выше, тем меньше дар зависит от страха и злости и тем больше от тебя.',
+};
+const SCALE_HELP = {
+  stats:'Характеристики нужны для проверок: хватает — успех, не хватает 1–2 — есть шанс. Растут от поступков и от того, чем Лео занят в конце месяца.',
+  moral:'Какой ты человек. Растёт, когда помогаешь и держишь слово, падает от жестокости и корысти. От неё зависит, каким Лео выйдет в финале.',
+  moralScale:'Бессовестный · Циничный · Прагматичный · Совестливый · Принципиальный',
+  strange:'След, который оставляет дар. Копился с сентября незаметно. Чем выше, тем сильнее Лео отличается от обычных людей. От неё зависят некоторые финалы.',
+  rel:'Как к Лео относятся люди. Близкие говорят правду, помогают в трудную минуту и открывают новые варианты.',
+  money:'Деньги Лео. Пока только копятся.',
+};
+let HELP = (()=>{ try{ return localStorage.getItem('noctis-help')!=='0'; }catch(e){ return true; } })();
+
 /* Контроль (осознанный взлом) появляется у игрока после раскрытия правды */
 function statOrder(){ return (S && S.flags && S.flags.revealed) ? [...STAT_ORDER, 'control'] : STAT_ORDER; }
 const REL = {dad:'Томаш, отец', mom:'Ирина, мать', nika:'Ника, сестра', dana:'Дана Ортега', street:'Квартал (репутация)', teo:'Тео Бартал', grach:'Грач', barro:'Барро', kit:'Кит', viv:'Вивьен Кросс, Пандора'};
@@ -3090,7 +3116,7 @@ function renderIntro(){
       ${canContinue ? `<button class="next" id="contBtn" type="button">Продолжить</button><button class="btn-ghost" id="newBtn" type="button">Начать заново</button>`
                     : `<button class="next" id="newBtn" type="button">Начать</button>`}
     </div>
-    <p class="rules">Один год, сентябрь–апрель. Около трёх часов, пять финалов. Характеристики растут от поступков: чем Лео занимается, тем он и становится. Когда что-то растёт, игра об этом скажет. Наведи на вариант (на телефоне — нажми один раз), чтобы увидеть, что он даст.</p>
+    <p class="rules">Один год, сентябрь–апрель. Около трёх часов, пять финалов. Характеристики растут от поступков: чем Лео занимается, тем он и становится. Когда что-то растёт, игра об этом скажет. Наведи на вариант (на телефоне — нажми один раз), чтобы увидеть, что он даст. Что значит каждая характеристика — в панели Лео (на телефоне кнопка «Лео» вверху).</p>
     <span class="hint">Выборы: клавиши 1–6 или клик. Далее: Enter.</span>
   </div>`;
   document.getElementById('newBtn').addEventListener('click',()=>{ S = fresh(); go('p1'); });
@@ -3105,18 +3131,23 @@ function relLabel(v){ return v<=-3?['Враждебно','l-bad']:v<0?['Прох
 function renderPanel(){
   let h = `<button class="btn-ghost close-panel" id="closePanel" type="button">Закрыть</button>
   <div class="p-head"><div class="p-name">Лео Вельт</div><div class="p-sub">19 лет · студент-инженер</div></div>
-  <section class="p-sec"><h2>Характеристики</h2>`;
+  <section class="p-sec"><h2 class="h-row"><span>Характеристики</span><button class="help-t" id="helpBtn" type="button">${HELP?'Скрыть описания':'Что это?'}</button></h2>
+  ${HELP?`<div class="s-help">${esc(SCALE_HELP.stats)}</div>`:''}`;
   const grew = (S.view==='result' && S.result) ? S.result.changes.filter(c=>c.stat && c.c==='up').map(c=>c.stat) : [];
   statOrder().forEach(k=>{
     const v = S.stats[k];
-    h += `<div class="stat${grew.includes(k)?' grew':''}"><span class="n">${STATS[k]}</span><span class="pips">${Array.from({length:10},(_,i)=>`<i class="${i<v?'on':''}"></i>`).join('')}</span><span class="v">${v}</span></div>`;
+    h += `<div class="stat${grew.includes(k)?' grew':''}" title="${esc(STAT_HELP[k])}"><span class="n">${STATS[k]}</span><span class="pips">${Array.from({length:10},(_,i)=>`<i class="${i<v?'on':''}"></i>`).join('')}</span><span class="v">${v}</span></div>`;
+    if(HELP) h += `<div class="s-help">${esc(STAT_HELP[k])}</div>`;
   });
   h += `</section><section class="p-sec"><h2>Шкалы</h2>
     <div class="meter-row"><div class="meter-top"><span class="n">Мораль</span><span class="l">${moralLabel(S.moral)}</span></div>
-      <div class="moral" aria-label="Мораль ${S.moral}"><b style="left:${(S.moral+5)*10}%"></b></div></div>
+      <div class="moral" aria-label="Мораль ${S.moral}" title="${esc(SCALE_HELP.moral)}"><b style="left:${(S.moral+5)*10}%"></b></div>
+      ${HELP?`<div class="s-help" style="margin-top:0">${esc(SCALE_HELP.moral)}<br><b>${esc(SCALE_HELP.moralScale)}</b></div>`:''}</div>
     ${showStrange() ? `<div class="meter-row"><div class="meter-top"><span class="n">Странность</span><span class="l strange-l">${strangeLabel(S.strange)}</span></div>
-      <div class="strange">${Array.from({length:10},(_,i)=>`<i class="${i<S.strange?'on':''}"></i>`).join('')}</div></div>` : ''}
-  </section><section class="p-sec"><h2>Связи</h2>`;
+      <div class="strange">${Array.from({length:10},(_,i)=>`<i class="${i<S.strange?'on':''}"></i>`).join('')}</div>
+      ${HELP?`<div class="s-help" style="margin-top:0">${esc(SCALE_HELP.strange)}</div>`:''}</div>` : ''}
+  </section><section class="p-sec"><h2>Связи</h2>
+  ${HELP?`<div class="s-help">${esc(SCALE_HELP.rel)}</div>`:''}`;
   Object.keys(REL).forEach(k=>{
     if(!(k in S.rel)) return;
     const v = S.rel[k]; const [lab,cls] = relLabel(v);
@@ -3126,7 +3157,8 @@ function renderPanel(){
     h += `<div class="rel"><span class="n">${relName}</span><span class="l ${cls}">${lab}</span><span class="bar"><b style="left:${left}%;width:${w}%;background:${col}"></b></span></div>`;
   });
   h += `</section>
-  <div class="money"><span>Кредиты</span><b>${credits(S.money)}</b></div>
+  <div class="money" title="${esc(SCALE_HELP.money)}"><span>Кредиты</span><b>${credits(S.money)}</b></div>
+  ${HELP?`<div class="s-help">${esc(SCALE_HELP.money)}</div>`:''}
   <div class="p-foot"><button class="btn-ghost" id="restartBtn" type="button">Начать заново</button></div>`;
   $panel.innerHTML = h;
   const rb = document.getElementById('restartBtn');
@@ -3137,6 +3169,7 @@ function renderPanel(){
     armed = setTimeout(()=>{ armed=null; rb.textContent='Начать заново'; }, 3000);
   });
   document.getElementById('closePanel').addEventListener('click', closePanel);
+  document.getElementById('helpBtn').addEventListener('click',()=>{ HELP=!HELP; try{ localStorage.setItem('noctis-help', HELP?'1':'0'); }catch(e){} renderPanel(); });
 }
 
 /* «Что стало с…»: по строке о каждом близком человеке, в зависимости от финала и отношений */
