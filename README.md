@@ -23,3 +23,6 @@
 - экран «Что стало с…» в финале.
 
 Дальше: прохождение второй половины года автором, отзывы тестеров, решение по кредитам, иллюстрации.
+
+## Благодарности
+Часть фонов (дорожные события, итоги месяцев, несколько мест) — из набора [Free Cyberpunk Visual Novel Background Pack](https://dreambreaker-designs.itch.io/free-cyberpunk-visual-novel-background-pack) от Dreambreaker Designs.

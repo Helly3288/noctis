@@ -74,6 +74,9 @@ for line_block in re.split(r'\n(?=## |### )', md):
     items.append({'id': pid, 'name': name, 'section': section, 'fmt': fmt,
                   'prompt': ('вид внутри помещения, ' if KIND.get(pid,'').startswith('in_') and not pid.startswith(('char_','ev_','eve_')) and not body.startswith(('внутри','вид внутри')) else '') + body.rstrip('.') + ', ' + style_for(pid) + ', ' + NEG_INLINE})
 
+# Картинки, взятые из набора фонов, со страницы убираем — генерировать их не нужно
+FROM_PACK = set(re.findall(r'^- ([a-z0-9_]+) ← ', block('Взято из набора'), re.M))
+items = [i for i in items if i['id'] not in FROM_PACK]
 too_long = [i['id'] for i in items if len(i['prompt']) > 1000]
 assert not too_long, f'длиннее 1000 символов: {too_long}'
 
@@ -143,4 +146,4 @@ document.querySelectorAll('.card').forEach(card=>{{
 </body></html>
 """
 (root / 'prompts.html').write_text(page, encoding='utf-8')
-print(f'Промптов: {len(items)}, самый длинный: {max(len(i["prompt"]) for i in items)} символов')
+print(f'Из набора: {len(FROM_PACK)}. Промптов: {len(items)}, самый длинный: {max(len(i["prompt"]) for i in items)} символов')

@@ -33,6 +33,24 @@
 - **Доктор Сорель, 60:** невысокая сухая очень прямая, тонкие губы, седые волосы зачёсаны назад, белый халат, полоска нейроинтерфейса у виска
 - **Шестая:** хрупкий полупрозрачный силуэт девочки из холодного света и линий данных
 
+## Взято из набора фонов (генерировать не нужно)
+Набор «Free Cyberpunk Visual Novel Background Pack» (Dreambreaker Designs, itch.io): можно в любых играх, указывать автора не обязательно.
+- rd_shop ← vending-machines-4.png
+- rd_train ← train-inside-2.png
+- rd_alley ← street-4.png
+- rd_flood ← underground-mall.png
+- rd_scan ← street-8.png
+- mon9 ← skyline-4.png
+- mon11 ← street-6.png
+- mon1 ← skyline-8.png
+- mon4 ← skyline-6.png
+- s5 ← street-5.png
+- s9d ← restaurant-inside-3.png
+- s11 ← building-outside-2.png
+- s20 ← room-2.png
+- s25 ← room-3.png
+- end_viv ← balcony.png
+
 ## С чего начать (видно сразу)
 title, s1, s2, s3, char_nika, char_parents, char_dana, s4, char_barro, s5, s6, char_teo. Дальше — по порядку года.
 
