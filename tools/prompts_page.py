@@ -18,13 +18,40 @@ style = block('Стиль').split('\n')[0].strip()
 negative = block('Негатив').split('\n')[0].strip()
 # Негатив встраивается в каждый промпт пожеланиями: отдельного поля в Kandinsky может не быть,
 # а слова вроде «лишние пальцы» в самом промпте генератор иногда как раз рисует.
-NEG_INLINE = 'чистое изображение без надписей, логотипов и водяных знаков, анатомически правильные руки и лица, естественные пропорции, не мультяшный рисунок, приглушённые цвета, чёткая детализация'
-# Сцены внутри помещения: без улицы и мокрого асфальта в стиле, иначе генератор выносит сцену на улицу
-INSIDE = {'char_parents'}
-style_inside = style.replace('киберпанк-мегаполис, ночь, непрерывный дождь, отражения на мокром асфальте', 'киберпанк, за окном дождь').replace('тёплый янтарный свет натриевых фонарей', 'тёплый янтарный свет ламп')
-# Дневные картинки: без ночи и дождя в стиле, иначе промпт спорит сам с собой
-DAY = {'char_viv', 's20', 'end_run', 'end_viv', 'end_destroy'}
-style_day = style.replace('ночь, непрерывный дождь, отражения на мокром асфальте, ', '').replace('тёплый янтарный свет натриевых фонарей как главный акцент', 'тёплый янтарный солнечный свет как главный акцент')
+NEG_INLINE = 'без надписей, логотипов и водяных знаков, правильная анатомия рук и лиц, естественные пропорции, не мультяшно, чёткая детализация'
+
+# Где и когда происходит сцена. Хвост стиля подбирается под это, иначе генератор
+# выносит людей на улицу под дождь, даже если сцена в комнате днём.
+SETTING = {
+    'out_night':   ('ночной мегаполис, непрерывный дождь, отражения на мокром асфальте', 'тёплый янтарный свет натриевых фонарей'),
+    'out_morning': ('раннее дождливое утро, серый рассеянный свет, отражения на мокром асфальте', 'тёплый янтарный свет из окон'),
+    'out_snow':    ('ночной мегаполис, мокрый снег, отражения на мокром асфальте', 'тёплый янтарный свет фонарей и гирлянд'),
+    'out_day':     ('солнечный день, чистый воздух, без дождя', 'тёплый янтарный солнечный свет'),
+    'in_night':    ('интерьер, вечер, за окном огни города', 'тёплый янтарный свет ламп'),
+    'in_day':      ('интерьер, день, за окном пасмурно', 'тёплый янтарный свет ламп'),
+}
+KIND = {
+    # персонажи и события
+    'char_nika': 'in_day', 'char_parents': 'in_day', 'char_dana': 'in_day', 'char_barro': 'in_night',
+    'char_kit': 'out_night', 'char_teo': 'in_night', 'char_grach': 'in_night', 'char_miguel': 'in_night',
+    'char_viv': 'out_day', 'char_sixth': 'in_night', 'char_sorel': 'in_night',
+    'ev_reveal': 'in_day', 'ev_lamp': 'in_night', 'ev_stairs': 'in_night', 'ev_dana_rain': 'out_night',
+    'ev_nika_found': 'out_night',
+    'eve_dana': 'in_night', 'eve_nika': 'in_night', 'eve_teo': 'in_night', 'eve_family': 'in_night', 'eve_kit': 'out_night',
+    # сцены
+    's1': 'out_morning', 's3': 'in_day', 's4': 'in_night', 's7': 'out_morning', 's8': 'in_day', 's8h': 'in_night',
+    's9a': 'in_night', 's9b': 'in_night', 's9d': 'in_night', 's11': 'in_night', 's12': 'in_night', 's14': 'in_day',
+    's15a': 'in_day', 's15': 'out_morning', 's16': 'in_night', 'mon12': 'out_snow', 's17': 'in_day', 's18': 'in_night',
+    's19': 'in_night', 's19d': 'in_day', 's20': 'out_day', 's21': 'in_night', 's22': 'in_night', 's25': 'in_night',
+    'mon3': 'in_night', 's26': 'in_day', 's27': 'in_night', 'mon4': 'out_morning', 's28': 'in_night', 's30': 'in_night',
+    'rd_train': 'in_night', 'rd_bus': 'in_night', 'rd_flood': 'in_night',
+    'end_run': 'out_day', 'end_destroy': 'out_morning', 'end_viv': 'out_day', 'end_cer': 'in_night',
+}
+def style_for(pid):
+    place, light = SETTING[KIND.get(pid, 'out_night')]
+    return ('живописная цифровая иллюстрация, кинематографичный кадр, киберпанк, ' + place +
+            ', приглушённая бирюзово-асфальтовая палитра, ' + light +
+            ' как главный акцент, редкий пурпурный неон, реализм, мягкая текстура кисти, атмосферная дымка, без текста, без букв')
 
 items, section = [], ''
 for line_block in re.split(r'\n(?=## |### )', md):
@@ -40,9 +67,8 @@ for line_block in re.split(r'\n(?=## |### )', md):
         continue
     pid, name = m.groups()
     fmt = '3:2' if pid.startswith(('char_', 'ev_', 'eve_')) else 'самый широкий (16:9 или 3:2)'
-    st = style_day if pid in DAY else style_inside if pid in INSIDE else style
     items.append({'id': pid, 'name': name, 'section': section, 'fmt': fmt,
-                  'prompt': body.rstrip('.') + ', ' + st + ', ' + NEG_INLINE})
+                  'prompt': ('вид внутри помещения, ' if KIND.get(pid,'').startswith('in_') and not body.startswith(('внутри','вид внутри')) else '') + body.rstrip('.') + ', ' + style_for(pid) + ', ' + NEG_INLINE})
 
 too_long = [i['id'] for i in items if len(i['prompt']) > 1000]
 assert not too_long, f'длиннее 1000 символов: {too_long}'
