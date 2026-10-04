@@ -68,7 +68,7 @@ for line_block in re.split(r'\n(?=## |### )', md):
     pid, name = m.groups()
     fmt = '3:2' if pid.startswith(('char_', 'ev_', 'eve_')) else 'самый широкий (16:9 или 3:2)'
     items.append({'id': pid, 'name': name, 'section': section, 'fmt': fmt,
-                  'prompt': ('вид внутри помещения, ' if KIND.get(pid,'').startswith('in_') and not body.startswith(('внутри','вид внутри')) else '') + body.rstrip('.') + ', ' + style_for(pid) + ', ' + NEG_INLINE})
+                  'prompt': ('вид внутри помещения, ' if KIND.get(pid,'').startswith('in_') and not body.startswith(('внутри','вид внутри','портрет','реалистичный портрет')) else '') + body.rstrip('.') + ', ' + style_for(pid) + ', ' + NEG_INLINE})
 
 too_long = [i['id'] for i in items if len(i['prompt']) > 1000]
 assert not too_long, f'длиннее 1000 символов: {too_long}'
