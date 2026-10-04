@@ -10,6 +10,7 @@
 
 ## Картинки
 - Генератор — Kandinsky, промпты и id всех 76 картинок в `docs/prompts.md`.
+- Готовые промпты с кнопкой «Скопировать»: `prompts.html` (на Pages /noctis/prompts.html) и `docs/prompts_ready.md`. После правки `docs/prompts.md` пересобрать: `python3 tools/prompts_page.py`.
 - Присланные файлы: `python3 tools/images.py <папка>` — сжимает в `img/<id>.webp` и обновляет список `IMAGES` в `src/game.html`. Потом обычная публикация.
 - Заставка сцены = id сцены (`s1`, `rd_train`, `mon9`, `end_run`, `title`); арт внутри сцены — `{img:'char_teo', cap:'Тео Бартал'}` в тексте узла. Нет файла — заставка кодом, арт внутри сцены не показывается.
 
