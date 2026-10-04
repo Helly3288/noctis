@@ -33,7 +33,7 @@ SETTING = {
 KIND = {
     # персонажи и события
     'char_nika': 'in_day', 'char_parents': 'in_day', 'char_dana': 'in_day', 'char_barro': 'in_night',
-    'char_kit': 'out_night', 'char_teo': 'in_night', 'char_grach': 'in_night', 'char_miguel': 'in_night',
+    'char_kit': 'out_night', 'char_teo': 'in_night', 'char_grach': 'out_night', 'char_miguel': 'in_night',
     'char_viv': 'out_day', 'char_sixth': 'in_night', 'char_sorel': 'in_night',
     'ev_reveal': 'in_day', 'ev_lamp': 'in_night', 'ev_stairs': 'in_night', 'ev_dana_rain': 'out_night',
     'ev_nika_found': 'out_night',
@@ -47,7 +47,12 @@ KIND = {
     'rd_train': 'in_night', 'rd_bus': 'in_night', 'rd_flood': 'in_night',
     'end_run': 'out_day', 'end_destroy': 'out_morning', 'end_viv': 'out_day', 'end_cer': 'in_night',
 }
+# Отдельный стиль для конкретной картинки (по образцу, который прислал автор)
+STYLE_OVERRIDE = {
+    'char_grach': 'экспрессивная цифровая живопись крупными мазками, кинематографичный кадр, мир киберпанка, ночь, насыщенный малиновый и пурпурный неон, глубокие тени, дым, атмосферная дымка',
+}
 def style_for(pid):
+    if pid in STYLE_OVERRIDE: return STYLE_OVERRIDE[pid]
     place, light = SETTING[KIND.get(pid, 'out_night')]
     return ('реалистичная цифровая живопись маслом, кинематографичный кадр, мир киберпанка, ' + place +
             ', бирюзово-асфальтовая палитра, ' + light + ' как акцент, пурпурный неон, атмосферная дымка')
